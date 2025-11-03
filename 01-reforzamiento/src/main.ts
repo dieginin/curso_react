@@ -1,6 +1,5 @@
 import "./style.css"
-
-import { Owner } from "./data/heroes.data"
+// import { Owner } from "./data/heroes.data"
 // import "./bases/01-const-let"
 // import "./bases/02-template-string"
 // import "./bases/03-object-literals"
@@ -11,7 +10,8 @@ import { Owner } from "./data/heroes.data"
 // import "./bases/07-array-destructuring"
 // import "./bases/tarea-01"
 // import "./bases/08-imp-exp"
-import { getHeroesByOwner } from "./bases/tarea-02"
+// import { getHeroesByOwner } from "./bases/tarea-02"
+import "./bases/09-promises"
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
@@ -19,5 +19,5 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   </div>
 `
 
-console.log(getHeroesByOwner(Owner.DC))
-console.log(getHeroesByOwner(Owner.Marvel))
+// console.log(getHeroesByOwner(Owner.DC))
+// console.log(getHeroesByOwner(Owner.Marvel))
