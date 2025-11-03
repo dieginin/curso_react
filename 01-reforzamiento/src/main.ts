@@ -11,7 +11,8 @@ import "./style.css"
 // import "./bases/tarea-01"
 // import "./bases/08-imp-exp"
 // import { getHeroesByOwner } from "./bases/tarea-02"
-import "./bases/09-promises"
+// import "./bases/09-promises"
+import "./bases/10-fetch-api"
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
