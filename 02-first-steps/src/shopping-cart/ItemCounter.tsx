@@ -1,3 +1,5 @@
+import "./ItemCounter.css"
+
 import { useState } from "react"
 
 interface Props {
@@ -12,10 +14,13 @@ export default function ItemCounter({ name, quantity }: Props) {
   const handleIncrement = () => setCount(count + 1)
 
   return (
-    <section
-      style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 10 }}
-    >
-      <span style={{ width: 150 }}>{name}</span>
+    <section className='item-row'>
+      <span
+        className='item-text'
+        style={{ color: count === 0 ? "red" : "black" }}
+      >
+        {name}
+      </span>
       <button onClick={handleDecrement}>
         <small>-1</small>
       </button>
