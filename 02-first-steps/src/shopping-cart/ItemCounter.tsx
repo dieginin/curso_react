@@ -4,10 +4,10 @@ import { useState } from "react"
 
 interface Props {
   name: string
-  quantity: number
+  quantity?: number
 }
 
-export default function ItemCounter({ name, quantity }: Props) {
+export default function ItemCounter({ name, quantity = 1 }: Props) {
   const [count, setCount] = useState(quantity)
 
   const handleDecrement = () => setCount(Math.max(0, count - 1))
