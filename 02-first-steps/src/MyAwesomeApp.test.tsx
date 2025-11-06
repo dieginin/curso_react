@@ -23,4 +23,10 @@ describe("MyAwesomeApp", () => {
 
     expect(h1.innerHTML).toBe("Diego")
   })
+
+  test("should match snapshot", () => {
+    const { container } = render(<MyAwesomeApp />)
+
+    expect(container).toMatchSnapshot()
+  })
 })
