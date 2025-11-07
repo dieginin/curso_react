@@ -51,4 +51,24 @@ describe("ItemCounter", () => {
 
     expect(screen.getAllByText(0)).toBeDefined()
   })
+
+  test("should change to red when quantity is 0", () => {
+    const itemName = "Test Item"
+
+    render(<ItemCounter name={itemName} quantity={0} />)
+
+    const itemText = screen.getByText(itemName)
+
+    expect(itemText.style.color).toBe("red")
+  })
+
+  test("should change to black when quantity is greater than 0", () => {
+    const itemName = "Test Item"
+
+    render(<ItemCounter name={itemName} />)
+
+    const itemText = screen.getByText(itemName)
+
+    expect(itemText.style.color).toBe("black")
+  })
 })
