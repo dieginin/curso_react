@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest"
 import { fireEvent, render, screen } from "@testing-library/react"
 
-import ItemCounter from "./ItemCounter"
+import { ItemCounter } from "./ItemCounter"
 
 describe("ItemCounter", () => {
   test("should render with default values", () => {
