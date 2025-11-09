@@ -9,7 +9,7 @@ export async function GetGifsByQuery(query: string): Promise<Gif[]> {
 
   return response.data.data.map((gif) => ({
     id: gif.id,
-    title: gif.title,
+    title: gif.title.replace(" GIF", ""),
     url: gif.images.original.url,
     width: Number(gif.images.original.width),
     height: Number(gif.images.original.height),
