@@ -17,7 +17,7 @@ export function GifsApp() {
       <SearchBar placeholder='Buscar gifs' />
 
       {/* Búsquedas previas */}
-      <PreviousSearches />
+      <PreviousSearches searches={["Goku", "Dragon Ball Z"]} />
 
       {/* Gifs */}
       <GifList gifs={mockGifs} />
