@@ -10,6 +10,8 @@ export function GifsApp() {
 
   const handleSearchClicked = (search: string) => console.log({ search })
 
+  const handleSearch = (query: string) => console.log({ query })
+
   return (
     <>
       {/* Header */}
@@ -19,7 +21,10 @@ export function GifsApp() {
       />
 
       {/* Search */}
-      <SearchBar placeholder='Buscar gifs' />
+      <SearchBar
+        placeholder='Buscar gifs'
+        onSearch={(query: string) => handleSearch(query)}
+      />
 
       {/* Búsquedas previas */}
       <PreviousSearches
