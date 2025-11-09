@@ -1,4 +1,5 @@
 import { CustomHeader } from "./shared/components/CustomHeader"
+import { GetGifsByQuery } from "./gifs/services/get-gifs-by-query.action"
 import { GifList } from "./gifs/components/GifList"
 import { PreviousSearches } from "./gifs/components/PreviousSearches"
 import { SearchBar } from "./shared/components/SearchBar"
@@ -10,7 +11,7 @@ export function GifsApp() {
 
   const handleSearchClicked = (search: string) => console.log({ search })
 
-  const handleSearch = (query: string) => {
+  const handleSearch = async (query: string) => {
     const formattedQuery = query.trim().toLowerCase()
 
     if (formattedQuery.length === 0) return
@@ -18,6 +19,10 @@ export function GifsApp() {
     if (previousSearches.includes(formattedQuery)) return
 
     setPreviousSearches([formattedQuery, ...previousSearches].slice(0, 8))
+
+    const gifs = await GetGifsByQuery(formattedQuery)
+
+    console.log(gifs)
   }
 
   return (
