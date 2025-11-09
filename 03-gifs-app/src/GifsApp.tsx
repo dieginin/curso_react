@@ -1,13 +1,14 @@
 import { CustomHeader } from "./shared/components/CustomHeader"
 import { GetGifsByQuery } from "./gifs/services/get-gifs-by-query.action"
+import type { Gif } from "./gifs/interfaces/gif.interface"
 import { GifList } from "./gifs/components/GifList"
 import { PreviousSearches } from "./gifs/components/PreviousSearches"
 import { SearchBar } from "./shared/components/SearchBar"
-import { mockGifs } from "./mocks/gifs.mock"
 import { useState } from "react"
 
 export function GifsApp() {
-  const [previousSearches, setPreviousSearches] = useState(["dragon ball z"])
+  const [previousSearches, setPreviousSearches] = useState<string[]>([])
+  const [gifs, setGifs] = useState<Gif[]>([])
 
   const handleSearchClicked = (search: string) => console.log({ search })
 
@@ -20,9 +21,7 @@ export function GifsApp() {
 
     setPreviousSearches([formattedQuery, ...previousSearches].slice(0, 8))
 
-    const gifs = await GetGifsByQuery(formattedQuery)
-
-    console.log(gifs)
+    setGifs(await GetGifsByQuery(formattedQuery))
   }
 
   return (
@@ -46,7 +45,7 @@ export function GifsApp() {
       />
 
       {/* Gifs */}
-      <GifList gifs={mockGifs} />
+      <GifList gifs={gifs} />
     </>
   )
 }
