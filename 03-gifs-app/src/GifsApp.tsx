@@ -10,7 +10,15 @@ export function GifsApp() {
 
   const handleSearchClicked = (search: string) => console.log({ search })
 
-  const handleSearch = (query: string) => console.log({ query })
+  const handleSearch = (query: string) => {
+    const formattedQuery = query.trim().toLowerCase()
+
+    if (formattedQuery.length === 0) return
+
+    if (previousSearches.includes(formattedQuery)) return
+
+    setPreviousSearches([formattedQuery, ...previousSearches].slice(0, 8))
+  }
 
   return (
     <>
