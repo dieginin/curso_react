@@ -1,18 +1,39 @@
 import { describe, expect, test } from "vitest"
 
+import AxiosMockAdapter from "axios-mock-adapter"
 import { GetGifsByQuery } from "./get-gifs-by-query.action"
+import { giphyApi } from "./api/giphy.api"
+import { giphyResponseMock } from "./../../../tests/mocks/giphy.response.data"
 
 describe("GetGifsByQuery", () => {
-  test("should return a list of gifs", async () => {
-    const gifs = await GetGifsByQuery("Test")
-    const [gif1] = gifs
+  //   test("should return a list of gifs", async () => {
+  //     const gifs = await GetGifsByQuery("Test")
+  //     const [gif1] = gifs
 
-    expect(gif1).toStrictEqual({
-      id: expect.any(String),
-      title: expect.any(String),
-      url: expect.any(String),
-      height: expect.any(Number),
-      width: expect.any(Number),
+  //     expect(gif1).toStrictEqual({
+  //       id: expect.any(String),
+  //       title: expect.any(String),
+  //       url: expect.any(String),
+  //       height: expect.any(Number),
+  //       width: expect.any(Number),
+  //     })
+  //   })
+
+  const mock = new AxiosMockAdapter(giphyApi)
+
+  test("should return a list of gifs", async () => {
+    mock.onGet("/search").reply(200, giphyResponseMock)
+
+    const gifs = await GetGifsByQuery("Test")
+
+    expect(gifs.length).toBe(10)
+
+    gifs.forEach((gif) => {
+      expect(typeof gif.id).toBe("string")
+      expect(typeof gif.title).toBe("string")
+      expect(typeof gif.url).toBe("string")
+      expect(typeof gif.height).toBe("number")
+      expect(typeof gif.width).toBe("number")
     })
   })
 })
