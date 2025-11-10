@@ -1,7 +1,7 @@
 export function HooksApp() {
   return (
-    <div>
-      <h1>HooksApp</h1>
+    <div className='bg-gradient'>
+      <h1 className='text-3xl font-bold underline'>HooksApp</h1>
     </div>
   )
 }
