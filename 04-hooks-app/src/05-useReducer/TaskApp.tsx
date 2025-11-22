@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Check, Plus, Trash2 } from "lucide-react"
 import { getTasksInitialState, taskReducer } from "./reducer/taskReducer"
-import { useReducer, useState } from "react"
+import { useEffect, useReducer, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -10,6 +10,10 @@ import { Input } from "@/components/ui/input"
 export function TasksApp() {
   const [inputValue, setInputValue] = useState("")
   const [state, dispatch] = useReducer(taskReducer, getTasksInitialState())
+
+  useEffect(() => {
+    localStorage.setItem("tasks-state", JSON.stringify(state))
+  }, [state])
 
   const addTodo = () => {
     if (inputValue.length === 0) return
