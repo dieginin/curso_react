@@ -4,47 +4,101 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Play, SkipForward } from "lucide-react"
-import React, { useEffect, useReducer } from "react"
-import {
-  getInitialState,
-  scrambleWordsReducer,
-} from "./reducer/scrambleWords.reducer"
+import React, { useEffect, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import confetti from "canvas-confetti"
 
+const GAME_WORDS = [
+  "REACT",
+  "JAVASCRIPT",
+  "TYPESCRIPT",
+  "HTML",
+  "ANGULAR",
+  "SOLID",
+  "NODE",
+  "VUEJS",
+  "SVELTE",
+  "EXPRESS",
+  "MONGODB",
+  "POSTGRES",
+  "DOCKER",
+  "KUBERNETES",
+  "WEBPACK",
+  "VITE",
+  "TAILWIND",
+]
+
+// Esta función mezcla el arreglo para que siempre sea aleatorio
+const shuffleArray = (array: string[]) => {
+  return array.sort(() => Math.random() - 0.5)
+}
+
+// Esta función mezcla las letras de la palabra
+const scrambleWord = (word: string = "") => {
+  return word
+    .split("")
+    .sort(() => Math.random() - 0.5)
+    .join("")
+}
+
 export const ScrambleWords = () => {
-  const [state, dispatch] = useReducer(scrambleWordsReducer, getInitialState())
-  const {
-    currentWord,
-    errorCounter,
-    guess,
-    isGameOver,
-    maxAllowErrors,
-    maxSkips,
-    points,
-    scrambledWord,
-    skipCounter,
-    totalWords,
-    words,
-  } = state
+  const [words, setWords] = useState(shuffleArray(GAME_WORDS))
+
+  const [currentWord, setCurrentWord] = useState(words[0])
+  const [scrambledWord, setScrambledWord] = useState(scrambleWord(currentWord))
+  const [guess, setGuess] = useState("")
+  const [points, setPoints] = useState(0)
+  const [errorCounter, setErrorCounter] = useState(0)
+  const [maxAllowErrors, setMaxAllowErrors] = useState(3)
+
+  const [skipCounter, setSkipCounter] = useState(0)
+  const [maxSkips, setMaxSkips] = useState(3)
+
+  const [isGameOver, setIsGameOver] = useState(false)
 
   useEffect(() => {
-    if (points === 0) return
-    confetti({ particleCount: 100, spread: 120 })
-  }, [points])
+    setGuess("")
+    setCurrentWord(words[0])
+    setScrambledWord(scrambleWord(currentWord))
+  }, [words, currentWord])
+
+  useEffect(() => {
+    if (errorCounter === maxAllowErrors) {
+      setIsGameOver(true)
+    }
+  }, [errorCounter, maxAllowErrors])
 
   const handleGuessSubmit = (e: React.FormEvent) => {
     // Previene el refresh de la página
     e.preventDefault()
-
     // Implementar lógica de juego
-    dispatch({ type: "CHECK_ANSWER" })
+    if (guess !== currentWord) {
+      return setErrorCounter(errorCounter + 1)
+    }
+
+    setPoints(points + 1)
+    setWords(words.filter((word) => word !== currentWord))
+    confetti({ particleCount: 100, spread: 120 })
   }
 
-  const handlePlayAgain = () =>
-    dispatch({ type: "NEW_GAME", payload: getInitialState() })
+  const handleSkip = () => {
+    setSkipCounter(skipCounter + 1)
+    setWords(words.filter((word) => word !== currentWord))
+  }
+
+  const handlePlayAgain = () => {
+    const shuffledWords = shuffleArray(GAME_WORDS)
+    setWords(shuffledWords)
+    setCurrentWord(shuffledWords[0])
+    setScrambledWord(scrambleWord(shuffledWords[0]))
+    setGuess("")
+    setPoints(0)
+    setErrorCounter(0)
+    setSkipCounter(0)
+    setIsGameOver(false)
+  }
 
   //! Si ya no hay palabras para jugar, se muestra el mensaje de fin de juego
   if (words.length === 0) {
@@ -125,7 +179,7 @@ export const ScrambleWords = () => {
                     type='text'
                     value={guess}
                     onChange={(e) =>
-                      dispatch({ type: "SET_GUESS", payload: e.target.value })
+                      setGuess(e.target.value.toUpperCase().trim())
                     }
                     placeholder='Ingresa tu palabra...'
                     className='text-center text-lg font-semibold h-12 border-2 border-indigo-200 focus:border-indigo-500 transition-colors'
@@ -147,7 +201,7 @@ export const ScrambleWords = () => {
             <div className='grid grid-cols-2 gap-4 mb-6'>
               <div className='bg-linear-to-br from-green-50 to-emerald-50 rounded-lg p-4 text-center border border-green-200'>
                 <div className='text-2xl font-bold text-green-600'>
-                  {points} / {totalWords}
+                  {points} / {GAME_WORDS.length}
                 </div>
                 <div className='text-sm text-green-700 font-medium'>Puntos</div>
               </div>
@@ -162,7 +216,7 @@ export const ScrambleWords = () => {
             {/* Action Buttons */}
             <div className='grid grid-cols-2 gap-3'>
               <Button
-                onClick={() => dispatch({ type: "SKIP_WORD" })}
+                onClick={handleSkip}
                 variant='outline'
                 className='border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2'
                 disabled={isGameOver || skipCounter >= maxSkips}
