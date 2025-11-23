@@ -1,6 +1,6 @@
 import "./index.css"
 
-import { InstagromApp } from "./07-useOptimistic/InstagromApp.tsx"
+import { ClientInformation } from "./08-use-suspense/ClientInformation.tsx"
 // import { HooksApp } from "./HooksApp.tsx"
 // import { TrafficLight } from "./01-useState/TrafficLight.tsx"
 // import { TrafficLightWithEffect } from "./02-useEffect/TrafficLightWithEffect.tsx"
@@ -11,6 +11,7 @@ import { InstagromApp } from "./07-useOptimistic/InstagromApp.tsx"
 // import { ScrambleWords } from "./05-useReducer/ScrambleWords.tsx"
 // import MemoHook from "./06-memos/MemoHook.tsx"
 // import { MemoCounter } from "./06-memos/MemoCounter.tsx"
+// import { InstagromApp } from "./07-useOptimistic/InstagromApp.tsx"
 import { StrictMode } from "react"
 import { Toaster } from "sonner"
 import { createRoot } from "react-dom/client"
@@ -28,6 +29,7 @@ createRoot(document.getElementById("root")!).render(
     {/* <ScrambleWords /> */}
     {/* <MemoHook /> */}
     {/* <MemoCounter /> */}
-    <InstagromApp />
+    {/* <InstagromApp /> */}
+    <ClientInformation id={100} />
   </StrictMode>
 )
