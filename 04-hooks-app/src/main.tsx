@@ -1,6 +1,6 @@
 import "./index.css"
 
-import { MemoCounter } from "./06-memos/MemoCounter.tsx"
+import { InstagromApp } from "./07-useOptimistic/InstagromApp.tsx"
 // import { HooksApp } from "./HooksApp.tsx"
 // import { TrafficLight } from "./01-useState/TrafficLight.tsx"
 // import { TrafficLightWithEffect } from "./02-useEffect/TrafficLightWithEffect.tsx"
@@ -10,6 +10,7 @@ import { MemoCounter } from "./06-memos/MemoCounter.tsx"
 // import { TasksApp } from "./05-useReducer/TaskApp.tsx"
 // import { ScrambleWords } from "./05-useReducer/ScrambleWords.tsx"
 // import MemoHook from "./06-memos/MemoHook.tsx"
+// import { MemoCounter } from "./06-memos/MemoCounter.tsx"
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 
@@ -24,6 +25,7 @@ createRoot(document.getElementById("root")!).render(
     {/* <TasksApp /> */}
     {/* <ScrambleWords /> */}
     {/* <MemoHook /> */}
-    <MemoCounter />
+    {/* <MemoCounter /> */}
+    <InstagromApp />
   </StrictMode>
 )
