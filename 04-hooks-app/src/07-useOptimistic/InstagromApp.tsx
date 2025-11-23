@@ -48,7 +48,6 @@ export const InstagromApp = () => {
       //   ])
 
       // ! Este seria el codigo para revertir el proceso
-      setComments((prev) => prev)
       toast("Error al agregar comentario", {
         description: "Intente nuevamente",
         duration: 10_000,
