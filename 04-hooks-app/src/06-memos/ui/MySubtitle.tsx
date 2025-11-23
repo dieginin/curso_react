@@ -1,8 +1,10 @@
+import { memo } from "react"
+
 interface Props {
   subtitle: string
 }
 
-export function MySubtitle({ subtitle }: Props) {
+export const MySubtitle = memo(({ subtitle }: Props) => {
   console.log("MySubtitle re-render")
 
   return (
@@ -14,4 +16,4 @@ export function MySubtitle({ subtitle }: Props) {
       </button>
     </>
   )
-}
+})
