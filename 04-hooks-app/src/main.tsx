@@ -1,6 +1,5 @@
 import "./index.css"
 
-import { ClientInformation } from "./08-use-suspense/ClientInformation.tsx"
 // import { HooksApp } from "./HooksApp.tsx"
 // import { TrafficLight } from "./01-useState/TrafficLight.tsx"
 // import { TrafficLightWithEffect } from "./02-useEffect/TrafficLightWithEffect.tsx"
@@ -12,9 +11,12 @@ import { ClientInformation } from "./08-use-suspense/ClientInformation.tsx"
 // import MemoHook from "./06-memos/MemoHook.tsx"
 // import { MemoCounter } from "./06-memos/MemoCounter.tsx"
 // import { InstagromApp } from "./07-useOptimistic/InstagromApp.tsx"
-import { StrictMode } from "react"
+import { StrictMode, Suspense } from "react"
+
+import { ClientInformation } from "./08-use-suspense/ClientInformation.tsx"
 import { Toaster } from "sonner"
 import { createRoot } from "react-dom/client"
+import { getUserAction } from "./08-use-suspense/api/get-user.action.ts"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -30,6 +32,14 @@ createRoot(document.getElementById("root")!).render(
     {/* <MemoHook /> */}
     {/* <MemoCounter /> */}
     {/* <InstagromApp /> */}
-    <ClientInformation id={100} />
+    <Suspense
+      fallback={
+        <div className='bg-gradient flex flex-col gap-4'>
+          <h1 className='text-5xl font-thin text-white'>Cargando...</h1>
+        </div>
+      }
+    >
+      <ClientInformation getUser={getUserAction(1000)} />
+    </Suspense>
   </StrictMode>
 )
