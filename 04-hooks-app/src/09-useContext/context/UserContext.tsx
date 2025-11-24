@@ -1,5 +1,5 @@
 import { createContext, useState, type PropsWithChildren } from "react"
-import type { User } from "../data/user-mock.data"
+import { users, type User } from "../data/user-mock.data"
 
 type AuthStatusType = "checking" | "authenticated" | "non-authenticated"
 
@@ -15,12 +15,27 @@ interface UserContextProps {
 
 const UserContext = createContext({} as UserContextProps)
 
-export const UserContextProvider = ({ children }: PropsWithChildren) => {
+function UserContextProvider({ children }: PropsWithChildren) {
   const [authStatus, setAuthStatus] = useState<AuthStatusType>("checking")
   const [user, setUser] = useState<User | null>(null)
 
-  const handleLogin = (id: number) => id === id
-  const handleLogout = () => {}
+  const handleLogin = (id: number) => {
+    const user = users.find((user) => user.id === id)
+
+    if (!user) {
+      console.error(`User not found ${id}`)
+      setUser(null)
+      setAuthStatus("non-authenticated")
+      return false
+    }
+    setUser(user)
+    setAuthStatus("authenticated")
+    return true
+  }
+  const handleLogout = () => {
+    setUser(null)
+    setAuthStatus("non-authenticated")
+  }
 
   const userContextValue = {
     authStatus: authStatus,
@@ -31,3 +46,5 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
 
   return <UserContext value={userContextValue}>{children}</UserContext>
 }
+
+export { UserContext, UserContextProvider }
