@@ -11,6 +11,7 @@ type AuthStatusType = "checking" | "authenticated" | "non-authenticated"
 interface UserContextProps {
   //! State
   authStatus: AuthStatusType
+  isAuthenticated: boolean
   user: User | null
 
   //! Methods
@@ -47,18 +48,26 @@ function UserContextProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId")
 
-    if (storedUserId) handleLogin(+storedUserId)
+    if (storedUserId) {
+      handleLogin(+storedUserId)
+      return
+    }
     handleLogout()
   }, [])
 
-  const userContextValue = {
-    authStatus: authStatus,
-    user: user,
-    login: handleLogin,
-    logout: handleLogout,
-  }
-
-  return <UserContext value={userContextValue}>{children}</UserContext>
+  return (
+    <UserContext
+      value={{
+        authStatus: authStatus,
+        isAuthenticated: authStatus === "authenticated",
+        user: user,
+        login: handleLogin,
+        logout: handleLogout,
+      }}
+    >
+      {children}
+    </UserContext>
+  )
 }
 
 export { UserContext, UserContextProvider }
