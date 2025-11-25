@@ -5,11 +5,10 @@ import { CustomJumbotron } from "@/components/custom/CustomJumbotron"
 import { CustomPagination } from "@/components/custom/CustomPagination"
 import { HeroGrid } from "@/heroes/components/HeroGrid"
 import { HeroStats } from "@/heroes/components/HeroStats"
-import { getHeroesByPage } from "@/heroes/actions/get-heroes-by-page.actions"
-import { getSummary } from "@/heroes/actions/get-summary.actions"
 import { useMemo } from "react"
-import { useQuery } from "@tanstack/react-query"
+import { usePaginatedHero } from "@/heroes/hooks/usePaginatedHero"
 import { useSearchParams } from "react-router"
+import { useSummary } from "@/heroes/hooks/useSummary"
 
 export const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -23,17 +22,8 @@ export const HomePage = () => {
     return validTabs.includes(tab) ? tab : "all"
   }, [tab])
 
-  const { data: heroesData } = useQuery({
-    queryKey: ["heroes", { page, limit }],
-    queryFn: () => getHeroesByPage(+page, +limit),
-    staleTime: 1000 * 60 * 5, // 5 minutos
-  })
-
-  const { data: summary } = useQuery({
-    queryKey: ["summary"],
-    queryFn: getSummary,
-    staleTime: 1000 * 60 * 5, //5 minutos
-  })
+  const { data: heroesData } = usePaginatedHero(+page, +limit)
+  const { data: summary } = useSummary()
 
   return (
     <>
