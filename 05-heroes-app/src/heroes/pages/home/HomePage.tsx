@@ -6,6 +6,7 @@ import { CustomPagination } from "@/components/custom/CustomPagination"
 import { HeroGrid } from "@/heroes/components/HeroGrid"
 import { HeroStats } from "@/heroes/components/HeroStats"
 import { getHeroesByPage } from "@/heroes/actions/get-heroes-by-page.actions"
+import { getSummary } from "@/heroes/actions/get-summary.actions"
 import { useMemo } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { useSearchParams } from "react-router"
@@ -26,6 +27,12 @@ export const HomePage = () => {
     queryKey: ["heroes", { page, limit }],
     queryFn: () => getHeroesByPage(+page, +limit),
     staleTime: 1000 * 60 * 5, // 5 minutos
+  })
+
+  const { data: summary } = useQuery({
+    queryKey: ["summary"],
+    queryFn: getSummary,
+    staleTime: 1000 * 60 * 5, //5 minutos
   })
 
   return (
@@ -54,7 +61,7 @@ export const HomePage = () => {
               })
             }
           >
-            Todos ({heroesData?.heroes.length})
+            Todos ({summary?.totalHeroes})
           </TabsTrigger>
           <TabsTrigger
             value='favorites'
@@ -76,7 +83,7 @@ export const HomePage = () => {
               })
             }
           >
-            Heroes (12)
+            Heroes ({summary?.heroCount})
           </TabsTrigger>
           <TabsTrigger
             value='villains'
@@ -87,7 +94,7 @@ export const HomePage = () => {
               })
             }
           >
-            Villanos (2)
+            Villanos ({summary?.villainCount})
           </TabsTrigger>
         </TabsList>
 
