@@ -21,7 +21,7 @@ export const CustomMenu = () => {
     <NavigationMenu>
       <NavigationMenuList>
         {menuItems.map((item) => (
-          <NavigationMenuItem>
+          <NavigationMenuItem key={item.label}>
             <NavigationMenuLink
               asChild
               className={cn(
