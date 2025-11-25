@@ -13,18 +13,18 @@ import { useSearchParams } from "react-router"
 export const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const activeTab = searchParams.get("tab") ?? "all"
-  const activePage = searchParams.get("page") ?? "1"
-  const activeLimit = searchParams.get("limit") ?? "6"
+  const tab = searchParams.get("tab") ?? "all"
+  const page = searchParams.get("page") ?? "1"
+  const limit = searchParams.get("limit") ?? "6"
 
   const selectedTab = useMemo(() => {
     const validTabs = ["all", "favorites", "heroes", "villains"]
-    return validTabs.includes(activeTab) ? activeTab : "all"
-  }, [activeTab])
+    return validTabs.includes(tab) ? tab : "all"
+  }, [tab])
 
   const { data: heroesData } = useQuery({
-    queryKey: ["heroes"],
-    queryFn: () => getHeroesByPage(+activePage, +activeLimit),
+    queryKey: ["heroes", { page, limit }],
+    queryFn: () => getHeroesByPage(+page, +limit),
     staleTime: 1000 * 60 * 5, // 5 minutos
   })
 
@@ -113,7 +113,7 @@ export const HomePage = () => {
       </Tabs>
 
       {/* Pagination */}
-      <CustomPagination totalPages={8} />
+      <CustomPagination totalPages={heroesData?.pages ?? 1} />
     </>
   )
 }
