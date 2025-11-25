@@ -21,7 +21,7 @@ export const getHeroesByPage = async (
 
   const heroes = data.heroes.map((hero) => ({
     ...hero,
-    image: `${BASE_URL}/images/${hero.id}.jpeg`,
+    image: `${BASE_URL}/images/${hero.image}`,
   }))
 
   return { ...data, heroes }
