@@ -14,13 +14,13 @@ type DisplayMode = "all" | "favorites" | "heroes" | "villains"
 export const HomePage = () => {
   const [activeTab, setActiveTab] = useState<DisplayMode>("all")
 
-  const { data } = useQuery({
+  const { data: heroesData } = useQuery({
     queryKey: ["heroes"],
     queryFn: () => getHeroesByPage(),
     staleTime: 1000 * 60 * 5, // 5 minutos
   })
 
-  console.log({ data })
+  console.log(heroesData?.heroes)
 
   return (
     <>
@@ -40,7 +40,7 @@ export const HomePage = () => {
       <Tabs value={activeTab} className='mb-8'>
         <TabsList className='grid w-full grid-cols-4'>
           <TabsTrigger value='all' onClick={() => setActiveTab("all")}>
-            Todos (16)
+            Todos ({heroesData?.heroes.length})
           </TabsTrigger>
           <TabsTrigger
             value='favorites'
@@ -61,22 +61,22 @@ export const HomePage = () => {
 
         <TabsContent value='all'>
           {/* Display all characters */}
-          <HeroGrid />
+          <HeroGrid heroes={heroesData?.heroes ?? []} />
         </TabsContent>
 
         <TabsContent value='favorites'>
           {/* Display favorite characters */}
-          <HeroGrid />
+          <HeroGrid heroes={[]} />
         </TabsContent>
 
         <TabsContent value='heroes'>
           {/* Display all heroes */}
-          <HeroGrid />
+          <HeroGrid heroes={[]} />
         </TabsContent>
 
         <TabsContent value='villains'>
           {/* Display all villains */}
-          <HeroGrid />
+          <HeroGrid heroes={[]} />
         </TabsContent>
       </Tabs>
 
