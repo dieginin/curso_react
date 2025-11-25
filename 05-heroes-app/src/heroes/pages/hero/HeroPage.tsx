@@ -4,12 +4,15 @@ import { Navigate, useParams } from "react-router"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { Badge } from "@/components/ui/badge"
+import { FavoritesContext } from "@/context/Favorites.context"
 import { Progress } from "@/components/ui/progress"
 import { getHero } from "@/heroes/actions/get-hero.actions"
+import { use } from "react"
 import { useQuery } from "@tanstack/react-query"
 
 export const HeroPage = () => {
   const { idSlug = "" } = useParams()
+  const { isFavorite, toggleFavorite } = use(FavoritesContext)
 
   const { data: superheroData, isError } = useQuery({
     queryKey: ["hero", idSlug],
@@ -67,8 +70,15 @@ export const HeroPage = () => {
                 className='rounded-full border-4 border-white/20 shadow-2xl'
               />
               <div className='absolute -top-2 -right-2'>
-                <div className='bg-yellow-400 text-black rounded-full p-2'>
-                  <Star className='w-6 h-6' />
+                <div
+                  className='bg-yellow-400 text-black rounded-full p-2'
+                  onClick={() => toggleFavorite(superheroData)}
+                >
+                  <Star
+                    className={`w-6 h-6 ${
+                      isFavorite(superheroData) && "fill-black"
+                    }`}
+                  />
                 </div>
               </div>
             </div>
