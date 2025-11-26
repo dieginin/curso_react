@@ -11,10 +11,10 @@ export const HeroStats = () => {
   const { favoritesCount } = use(FavoritesContext)
 
   return (
-    <div className='grid grid-cols-2 md:grid-cols-4 gap-4 mb-8'>
+    <div className='grid grid-cols-2 gap-4 mb-8 md:grid-cols-4'>
       <HeroStatCard
         title='Total de personajes'
-        icon={<Users className='h-4 w-4 text-muted-foreground' />}
+        icon={<Users className='w-4 h-4 text-muted-foreground' />}
       >
         <div className='text-2xl font-bold'>{summary?.totalHeroes}</div>
         <div className='flex gap-1 mt-2'>
@@ -29,7 +29,7 @@ export const HeroStats = () => {
 
       <HeroStatCard
         title='Favoritos'
-        icon={<Heart className='h-4 w-4 text-muted-foreground' />}
+        icon={<Heart className='w-4 h-4 text-muted-foreground' />}
       >
         <div className='text-2xl font-bold text-red-600'>{favoritesCount}</div>
         <p className='text-xs text-muted-foreground'>
@@ -39,17 +39,17 @@ export const HeroStats = () => {
 
       <HeroStatCard
         title='Fuerte'
-        icon={<Zap className='h-4 w-4 text-muted-foreground' />}
+        icon={<Zap className='w-4 h-4 text-muted-foreground' />}
       >
         <div className='text-lg font-bold'>{summary?.strongestHero.alias}</div>
         <p className='text-xs text-muted-foreground'>
-          Fuerza: {summary?.smartestHero.strength}/10
+          Fuerza: {summary?.strongestHero.strength}/10
         </p>
       </HeroStatCard>
 
       <HeroStatCard
         title='Inteligente'
-        icon={<Trophy className='h-4 w-4 text-muted-foreground' />}
+        icon={<Trophy className='w-4 h-4 text-muted-foreground' />}
       >
         <div className='text-lg font-bold'>{summary?.smartestHero.alias}</div>
         <p className='text-xs text-muted-foreground'>
