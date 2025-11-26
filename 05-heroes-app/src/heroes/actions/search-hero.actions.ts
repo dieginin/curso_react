@@ -19,7 +19,14 @@ export const SearchHero = async (options: Options): Promise<Hero[]> => {
     return []
 
   const { data } = await heroApi.get<Hero[]>("/search", {
-    params: { name, team, category, universe, status, strength },
+    params: {
+      name,
+      team,
+      category,
+      universe,
+      status,
+      strength: Math.max(+(strength ?? 0), 1),
+    },
   })
 
   return data.map((hero) => ({
