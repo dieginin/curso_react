@@ -1,5 +1,5 @@
 import { FavoritesContext, FavoritesProvider } from "./Favorites.context"
-import { describe, expect, test } from "vitest"
+import { beforeEach, describe, expect, test } from "vitest"
 import { fireEvent, render, screen } from "@testing-library/react"
 
 import type { Hero } from "@/heroes/interfaces/hero.interface"
@@ -45,6 +45,8 @@ const renderContextTest = () =>
   )
 
 describe("FavoritesContext", () => {
+  beforeEach(() => localStorage.clear())
+
   test("should initialize with initial values", () => {
     renderContextTest()
 
@@ -56,7 +58,6 @@ describe("FavoritesContext", () => {
     renderContextTest()
 
     const button = screen.getByTestId("toggle-favorite")
-
     fireEvent.click(button)
 
     expect(screen.getByTestId("favorite-count").textContent).toBe("1")
@@ -65,5 +66,18 @@ describe("FavoritesContext", () => {
     expect(localStorage.getItem("favorites")).toBe(
       '[{"id":"1","name":"Batman"}]'
     )
+  })
+
+  test("should remove hero to favorites when toggleFavorite is called", () => {
+    localStorage.setItem("favorites", JSON.stringify([mockHero]))
+    renderContextTest()
+
+    const button = screen.getByTestId("toggle-favorite")
+    fireEvent.click(button)
+
+    expect(screen.getByTestId("favorite-count").textContent).toBe("0")
+    expect(screen.getByTestId("is-favorite").textContent).toBe("false")
+    expect(screen.queryByTestId("hero-1")).toBeNull()
+    expect(localStorage.getItem("favorites")).toBe("[]")
   })
 })
