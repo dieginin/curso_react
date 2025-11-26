@@ -18,17 +18,18 @@ export const SearchControls = () => {
       })
     }
   }
+
   return (
     <>
-      <div className='flex flex-col lg:flex-row gap-4 mb-8'>
+      <div className='flex flex-col gap-4 mb-8 lg:flex-row'>
         {/* Search */}
         <div className='relative flex-1'>
-          <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5' />
+          <Search className='absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-3 top-1/2' />
           <Input
             ref={inputRef}
             defaultValue={searchParams.get("name") ?? ""}
             placeholder='Buscar heroes, villanos, poderes, equipos...'
-            className='pl-12 h-12 text-lg bg-white'
+            className='h-12 pl-12 text-lg bg-white'
             onKeyDown={handleKeyDown}
           />
         </div>
@@ -36,68 +37,68 @@ export const SearchControls = () => {
         {/* Action buttons */}
         <div className='flex gap-2'>
           <Button variant='outline' className='h-12 bg-transparent'>
-            <Filter className='h-4 w-4 mr-2' />
+            <Filter className='w-4 h-4 mr-2' />
             Filtros
           </Button>
 
           <Button variant='outline' className='h-12 bg-transparent'>
-            <SortAsc className='h-4 w-4 mr-2' />
+            <SortAsc className='w-4 h-4 mr-2' />
             Ordenar por nombre
           </Button>
 
           <Button variant='outline' className='h-12 bg-transparent'>
-            <Grid className='h-4 w-4' />
+            <Grid className='w-4 h-4' />
           </Button>
 
           <Button className='h-12'>
-            <Plus className='h-4 w-4 mr-2' />
+            <Plus className='w-4 h-4 mr-2' />
             Agregar
           </Button>
         </div>
       </div>
 
       {/* Advanced Filters */}
-      <div className='bg-white rounded-lg p-6 mb-8 shadow-sm border'>
-        <div className='flex justify-between items-center mb-4'>
+      <div className='p-6 mb-8 bg-white border rounded-lg shadow-sm'>
+        <div className='flex items-center justify-between mb-4'>
           <h3 className='text-lg font-semibold'>Filtros Avanzados</h3>
           <Button variant='ghost'>Limpiar filtros</Button>
         </div>
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
+        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
           <div className='space-y-2'>
             <label className='text-sm font-medium'>Equipo</label>
-            <div className='h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm'>
+            <div className='w-full h-10 px-3 py-2 text-sm border rounded-md border-input bg-background'>
               Todos
             </div>
           </div>
           <div className='space-y-2'>
             <label className='text-sm font-medium'>Categoría</label>
-            <div className='h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm'>
+            <div className='w-full h-10 px-3 py-2 text-sm border rounded-md border-input bg-background'>
               Todos
             </div>
           </div>
           <div className='space-y-2'>
             <label className='text-sm font-medium'>Universo</label>
-            <div className='h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm'>
+            <div className='w-full h-10 px-3 py-2 text-sm border rounded-md border-input bg-background'>
               Todos
             </div>
           </div>
           <div className='space-y-2'>
             <label className='text-sm font-medium'>Estatus</label>
-            <div className='h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm'>
+            <div className='w-full h-10 px-3 py-2 text-sm border rounded-md border-input bg-background'>
               Todos
             </div>
           </div>
         </div>
         <div className='mt-4'>
           <label className='text-sm font-medium'>Fuerza minima: 0/10</label>
-          <div className='relative flex w-full touch-none select-none items-center mt-2'>
-            <div className='relative h-2 w-full grow overflow-hidden rounded-full bg-secondary'>
+          <div className='relative flex items-center w-full mt-2 select-none touch-none'>
+            <div className='relative w-full h-2 overflow-hidden rounded-full grow bg-secondary'>
               <div
                 className='absolute h-full bg-primary'
                 style={{ width: "0%" }}
               />
             </div>
-            <div className='block h-5 w-5 rounded-full border-2 border-primary bg-background ring-offset-background transition-colors' />
+            <div className='block w-5 h-5 transition-colors border-2 rounded-full border-primary bg-background ring-offset-background' />
           </div>
         </div>
       </div>
