@@ -10,6 +10,8 @@ export const HeroStats = () => {
   const { data: summary } = useSummary()
   const { favoritesCount } = use(FavoritesContext)
 
+  if (!summary) return <div>Loading...</div>
+
   return (
     <div className='grid grid-cols-2 gap-4 mb-8 md:grid-cols-4'>
       <HeroStatCard
