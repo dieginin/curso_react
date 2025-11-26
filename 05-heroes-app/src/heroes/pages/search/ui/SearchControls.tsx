@@ -9,22 +9,36 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
 } from "@/components/ui/accordion"
 
 export const SearchControls = () => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const sliderRef = useRef<HTMLInputElement>(null)
 
   const [searchParams, setSearchParams] = useSearchParams()
 
+  const activeAccordion = searchParams.get("active-accordion") ?? ""
+  const strength = +(searchParams.get("strength") ?? "0")
+
+  const setQueryParams = (key: string, value: string) =>
+    setSearchParams((prev) => {
+      prev.set(key, value)
+      return prev
+    })
+
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === "Enter") {
-      setSearchParams((prev) => {
-        prev.set("name", inputRef.current?.value ?? "")
-        return prev
-      })
+    if (event.key === "Enter")
+      setQueryParams("name", inputRef.current?.value ?? "")
+  }
+
+  const toggleAdvFilters = () => {
+    if (activeAccordion === "advanced-filters") {
+      // return setSearchParams((prev) => {
+      //   prev.delete("active-accordion")
+      //   return prev
+      // })
+      return setQueryParams("active-accordion", "none")
     }
+    setQueryParams("active-accordion", "advanced-filters")
   }
 
   return (
@@ -44,17 +58,23 @@ export const SearchControls = () => {
 
         {/* Action buttons */}
         <div className='flex gap-2'>
-          <Button variant='outline' className='h-12 bg-transparent'>
+          <Button
+            variant={
+              activeAccordion === "advanced-filters" ? "default" : "outline"
+            }
+            className='h-12'
+            onClick={toggleAdvFilters}
+          >
             <Filter className='w-4 h-4 mr-2' />
             Filtros
           </Button>
 
-          <Button variant='outline' className='h-12 bg-transparent'>
+          <Button variant='outline' className='h-12'>
             <SortAsc className='w-4 h-4 mr-2' />
             Ordenar por nombre
           </Button>
 
-          <Button variant='outline' className='h-12 bg-transparent'>
+          <Button variant='outline' className='h-12'>
             <Grid className='w-4 h-4' />
           </Button>
 
@@ -66,8 +86,8 @@ export const SearchControls = () => {
       </div>
 
       {/* Advanced Filters */}
-      <Accordion type='single' collapsible>
-        <AccordionItem value='item-1'>
+      <Accordion type='single' collapsible value={activeAccordion}>
+        <AccordionItem value='advanced-filters'>
           <AccordionContent>
             <div className='p-6 mb-8 bg-white border rounded-lg shadow-sm'>
               <div className='flex items-center justify-between mb-4'>
@@ -102,18 +122,17 @@ export const SearchControls = () => {
               </div>
               <div className='mt-4'>
                 <label className='text-sm font-medium'>
-                  Fuerza minima: 0/10
+                  Fuerza minima: {strength}/10
                 </label>
-                <Slider ref={sliderRef} defaultValue={[0]} max={10} step={1} />
-                {/* <div className='relative flex items-center w-full mt-2 select-none touch-none'>
-            <div className='relative w-full h-2 overflow-hidden rounded-full grow bg-secondary'>
-              <div
-                className='absolute h-full bg-primary'
-                style={{ width: "0%" }}
-              />
-            </div>
-            <div className='block w-5 h-5 transition-colors border-2 rounded-full border-primary bg-background ring-offset-background' />
-          </div> */}
+                <Slider
+                  className='relative flex items-center w-full mt-2 select-none touch-none'
+                  defaultValue={[strength]}
+                  max={10}
+                  step={1}
+                  onValueChange={(values) =>
+                    setQueryParams("strength", values[0].toString())
+                  }
+                />
               </div>
             </div>
           </AccordionContent>
