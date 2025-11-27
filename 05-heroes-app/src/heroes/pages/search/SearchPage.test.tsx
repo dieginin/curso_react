@@ -28,6 +28,10 @@ vi.mock("@/heroes/components/HeroGrid", () => ({
   ),
 }))
 
+// vi.mock("./ui/SearchControls", () => ({
+//   SearchControls: () => <div>SearchControls</div>,
+// }))
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: { retry: false },
