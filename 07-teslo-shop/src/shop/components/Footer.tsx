@@ -1,10 +1,12 @@
+import { Logo } from "@/components/shared/Logo"
+
 export const Footer = () => {
   return (
     <footer className='border-t py-12 px-4 lg:px-8 mt-16'>
       <div className='container mx-auto'>
         <div className='grid grid-cols-1 md:grid-cols-4 gap-8'>
           <div>
-            <h3 className='font-semibold mb-4'>TESLA STYLE</h3>
+            <Logo />
             <p className='text-sm text-muted-foreground'>
               Ropa inspirada en el diseño minimalista y la innovación de Tesla.
             </p>
@@ -91,7 +93,7 @@ export const Footer = () => {
 
         <div className='border-t mt-8 pt-8 text-center text-sm text-muted-foreground'>
           <p>
-            &copy; {new Date().getFullYear()} Teslo Style. Todos los derechos
+            &copy; {new Date().getFullYear()} Teslo Shop. Todos los derechos
             reservados.
           </p>
         </div>
