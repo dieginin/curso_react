@@ -96,7 +96,7 @@ export const Header = () => {
               <Search className='h-5 w-5' />
             </Button>
 
-            <Link to='auth/login'>
+            <Link to='/auth/login'>
               <Button variant='default' size='sm' className='ml-2'>
                 Login
               </Button>
