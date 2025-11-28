@@ -1,3 +1,14 @@
+import { Jumbotron } from "@/shop/components/Jumbotron"
+import { Pagination } from "@/components/shared/Pagination"
+import { ProductsGrid } from "@/shop/components/ProductsGrid"
+import { products } from "@/mocks/products.mock"
+
 export const HomePage = () => {
-  return <div>HomePage</div>
+  return (
+    <>
+      <Jumbotron title='Todos los productos' />
+      <ProductsGrid products={products} />
+      <Pagination totalPages={5} />
+    </>
+  )
 }
