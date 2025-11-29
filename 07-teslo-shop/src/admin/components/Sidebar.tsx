@@ -33,7 +33,10 @@ export const Sidebar = ({ isCollapsed, onToggle }: Props) => {
     { icon: HelpCircle, label: "Ayuda" },
   ]
 
-  const isActiveRoute = (to: string) => to === pathname
+  const isActiveRoute = (to: string) =>
+    pathname.includes("/admin/products") && to === "/admin/products"
+      ? true
+      : to === pathname
 
   return (
     <div
