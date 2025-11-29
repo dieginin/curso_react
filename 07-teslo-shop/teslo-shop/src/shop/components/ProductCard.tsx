@@ -1,23 +1,24 @@
 import { Card, CardContent } from "@/components/ui/card"
 
 import { Button } from "@/components/ui/button"
+import type { Size } from "@/interfaces/product.interface"
 
 interface Props {
-  id: string
   name: string
   price: number
   image: string
   category: string
+  sizes: Size[]
 }
 
-export const ProductCard = ({ id, name, price, image, category }: Props) => {
+export const ProductCard = ({ name, price, image, category, sizes }: Props) => {
   return (
     <Card className='border-0 shadow-none cursor-pointer group product-card-hover'>
       <CardContent className='p-0'>
         <div className='relative overflow-hidden rounded-lg aspect-square bg-muted'>
           <img
             src={image}
-            alt={`${id} - ${name}`}
+            alt={name}
             className='object-cover w-full h-full transition-transform duration-300 group-hover:scale-105'
           />
           <div className='image-overlay' />
@@ -27,7 +28,7 @@ export const ProductCard = ({ id, name, price, image, category }: Props) => {
           <div className='space-y-1'>
             <h3 className='text-sm font-medium tracking-tight'>{name}</h3>
             <p className='text-xs uppercase text-muted-foreground'>
-              {category}
+              {category} - <span className='font-bold'>{sizes.join(", ")}</span>
             </p>
           </div>
 
