@@ -42,8 +42,8 @@ export const QuickActions = () => {
   ]
 
   return (
-    <div className='bg-white p-6 rounded-xl shadow-sm border border-gray-200'>
-      <h3 className='text-lg font-semibold text-gray-900 mb-4'>
+    <div className='p-6 bg-white border border-gray-200 shadow-sm rounded-xl'>
+      <h3 className='mb-4 text-lg font-semibold text-gray-900'>
         Quick Actions
       </h3>
       <div className='grid grid-cols-2 gap-3'>

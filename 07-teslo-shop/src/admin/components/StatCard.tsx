@@ -24,10 +24,10 @@ export const StatCard = ({
   }[changeType]
 
   return (
-    <div className='bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow'>
+    <div className='p-6 transition-shadow bg-white border border-gray-200 shadow-sm rounded-xl hover:shadow-md'>
       <div className='flex items-center justify-between'>
         <div>
-          <p className='text-sm font-medium text-gray-600 mb-1'>{title}</p>
+          <p className='mb-1 text-sm font-medium text-gray-600'>{title}</p>
           <p className='text-3xl font-bold text-gray-900'>{value}</p>
           <div
             className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium mt-2 ${changeColor}`}

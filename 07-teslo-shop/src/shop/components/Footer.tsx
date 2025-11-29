@@ -2,7 +2,7 @@ import { Logo } from "@/components/shared/Logo"
 
 export const Footer = () => {
   return (
-    <footer className='border-t py-12 px-4 lg:px-8 mt-16'>
+    <footer className='px-4 py-12 mt-16 border-t lg:px-8'>
       <div className='container mx-auto'>
         <div className='grid grid-cols-1 md:grid-cols-4 gap-8'>
           <div>
@@ -13,8 +13,8 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h4 className='font-medium mb-4'>Productos</h4>
-            <ul className='space-y-2 text-sm text-muted-foreground'>
+            <h4 className='mb-4 font-medium'>Productos</h4>
+            <ul className='text-sm space-y-2 text-muted-foreground'>
               <li>
                 <a href='#' className='hover:text-foreground'>
                   Camisetas
@@ -39,8 +39,8 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h4 className='font-medium mb-4'>Ayuda</h4>
-            <ul className='space-y-2 text-sm text-muted-foreground'>
+            <h4 className='mb-4 font-medium'>Ayuda</h4>
+            <ul className='text-sm space-y-2 text-muted-foreground'>
               <li>
                 <a href='#' className='hover:text-foreground'>
                   Contacto
@@ -65,8 +65,8 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h4 className='font-medium mb-4'>Empresa</h4>
-            <ul className='space-y-2 text-sm text-muted-foreground'>
+            <h4 className='mb-4 font-medium'>Empresa</h4>
+            <ul className='text-sm space-y-2 text-muted-foreground'>
               <li>
                 <a href='#' className='hover:text-foreground'>
                   Sobre Nosotros
@@ -91,7 +91,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className='border-t mt-8 pt-8 text-center text-sm text-muted-foreground'>
+        <div className='pt-8 mt-8 text-sm text-center border-t text-muted-foreground'>
           <p>
             &copy; {new Date().getFullYear()} Teslo Shop. Todos los derechos
             reservados.

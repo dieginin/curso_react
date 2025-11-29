@@ -28,7 +28,7 @@ export const Pagination = ({ totalPages }: Props) => {
         disabled={page === 1}
         onClick={() => handlePageChange(page - 1)}
       >
-        <ChevronLeft className='h-4 w-4' />
+        <ChevronLeft className='w-4 h-4' />
         Anterior
       </Button>
 
@@ -50,7 +50,7 @@ export const Pagination = ({ totalPages }: Props) => {
         onClick={() => handlePageChange(page + 1)}
       >
         Siguiente
-        <ChevronRight className='h-4 w-4' />
+        <ChevronRight className='w-4 h-4' />
       </Button>
     </div>
   )

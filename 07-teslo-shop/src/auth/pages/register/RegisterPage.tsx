@@ -9,8 +9,8 @@ import { Logo } from "@/components/shared/Logo"
 export const RegisterPage = () => {
   return (
     <div className='flex flex-col gap-6'>
-      <Card className='overflow-hidden p-0'>
-        <CardContent className='grid p-0 md:grid-cols-2'>
+      <Card className='p-0 overflow-hidden'>
+        <CardContent className='p-0 grid md:grid-cols-2'>
           <form className='p-6 md:p-8'>
             <div className='flex flex-col gap-6'>
               <div className='flex flex-col items-center text-center'>
@@ -44,8 +44,8 @@ export const RegisterPage = () => {
               <Button type='submit' className='w-full'>
                 Registrarse
               </Button>
-              <div className='relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border'>
-                <span className='relative z-10 bg-background px-2 text-muted-foreground'>
+              <div className='relative text-sm text-center after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border'>
+                <span className='relative z-10 px-2 bg-background text-muted-foreground'>
                   O continua con
                 </span>
               </div>
@@ -78,7 +78,7 @@ export const RegisterPage = () => {
                   <span className='sr-only'>Registrarse con Meta</span>
                 </Button>
               </div>
-              <div className='text-center text-sm'>
+              <div className='text-sm text-center'>
                 Ya tienes cuenta?{" "}
                 <Link to='/auth/login' className='underline underline-offset-4'>
                   Ingresar

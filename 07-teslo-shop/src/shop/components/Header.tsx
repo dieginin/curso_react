@@ -32,13 +32,13 @@ export const Header = () => {
 
   return (
     <header className='sticky top-0 z-50 w-full border-b backdrop-blur bg-slate-50'>
-      <div className='container mx-auto px-4 lg:px-8'>
-        <div className='flex h-16 items-center justify-between'>
+      <div className='container px-4 mx-auto lg:px-8'>
+        <div className='flex items-center justify-between h-16'>
           {/* Logo */}
           <Logo />
 
           {/* Navigation - Desktop */}
-          <nav className='hidden md:flex items-center space-x-8'>
+          <nav className='items-center hidden md:flex space-x-8'>
             <Link
               to='/'
               className={cn(
@@ -79,13 +79,13 @@ export const Header = () => {
 
           {/* Search and Cart */}
           <div className='flex items-center space-x-4'>
-            <div className='hidden md:flex items-center space-x-2'>
+            <div className='items-center hidden md:flex space-x-2'>
               <div className='relative'>
-                <Search className='absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground' />
+                <Search className='absolute w-4 h-4 left-3 top-1/2 -translate-y-1/2 text-muted-foreground' />
                 <Input
                   ref={inputRef}
                   placeholder='Buscar productos...'
-                  className='pl-9 w-64 h-9 bg-white'
+                  className='w-64 bg-white pl-9 h-9'
                   onKeyDown={handleSearch}
                   defaultValue={query}
                 />
@@ -93,7 +93,7 @@ export const Header = () => {
             </div>
 
             <Button variant='ghost' size='icon' className='md:hidden'>
-              <Search className='h-5 w-5' />
+              <Search className='w-5 h-5' />
             </Button>
 
             <Link to='/auth/login'>

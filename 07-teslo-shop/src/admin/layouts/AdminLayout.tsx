@@ -9,10 +9,10 @@ const AdminLayout = () => {
   const toggleSidebar = () => setSidebarCollapsed(!sidebarCollapsed)
 
   return (
-    <div className='min-h-screen bg-gray-50 flex'>
+    <div className='flex min-h-screen bg-gray-50'>
       <Sidebar isCollapsed={sidebarCollapsed} onToggle={toggleSidebar} />
 
-      <div className='flex-1 flex flex-col'>
+      <div className='flex flex-col flex-1'>
         <Header />
 
         <main className='flex-1 p-6' children={<Outlet />} />

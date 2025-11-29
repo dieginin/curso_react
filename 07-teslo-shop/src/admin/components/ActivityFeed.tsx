@@ -33,8 +33,8 @@ export const ActivityFeed = () => {
   ]
 
   return (
-    <div className='bg-white p-6 rounded-xl shadow-sm border border-gray-200'>
-      <h3 className='text-lg font-semibold text-gray-900 mb-4'>
+    <div className='p-6 bg-white border border-gray-200 shadow-sm rounded-xl'>
+      <h3 className='mb-4 text-lg font-semibold text-gray-900'>
         Recent Activity
       </h3>
       <div className='space-y-4'>
@@ -50,13 +50,13 @@ export const ActivityFeed = () => {
                   {activity.title}
                 </p>
                 <p className='text-sm text-gray-600'>{activity.description}</p>
-                <p className='text-xs text-gray-500 mt-1'>{activity.time}</p>
+                <p className='mt-1 text-xs text-gray-500'>{activity.time}</p>
               </div>
             </div>
           )
         })}
       </div>
-      <button className='w-full mt-4 text-sm text-blue-600 hover:text-blue-700 font-medium'>
+      <button className='w-full mt-4 text-sm font-medium text-blue-600 hover:text-blue-700'>
         View all activities
       </button>
     </div>

@@ -71,15 +71,15 @@ export const DashboardPage = () => {
       />
 
       {/* Stats Grid */}
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8'>
+      <div className='grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4'>
         {stats.map((stat, index) => (
           <StatCard key={index} {...stat} />
         ))}
       </div>
 
       {/* Charts and Activity Section */}
-      <div className='grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8'>
-        <div className='lg:col-span-2 space-y-6'>
+      <div className='grid grid-cols-1 gap-6 mb-8 lg:grid-cols-3'>
+        <div className='space-y-6 lg:col-span-2'>
           <Chart title='Traffic Sources' data={chartData} />
           <Chart title='Performance Metrics' data={performanceData} />
         </div>
@@ -91,8 +91,8 @@ export const DashboardPage = () => {
       </div>
 
       {/* Additional Dashboard Section */}
-      <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-        <div className='bg-white p-6 rounded-xl shadow-sm border border-gray-200'>
+      <div className='grid grid-cols-1 gap-6 lg:grid-cols-2'>
+        <div className='p-6 bg-white border border-gray-200 shadow-sm rounded-xl'>
           <div className='flex items-center justify-between mb-4'>
             <h3 className='text-lg font-semibold text-gray-900'>Top Pages</h3>
             <Eye size={20} className='text-gray-400' />
@@ -128,7 +128,7 @@ export const DashboardPage = () => {
           </div>
         </div>
 
-        <div className='bg-white p-6 rounded-xl shadow-sm border border-gray-200'>
+        <div className='p-6 bg-white border border-gray-200 shadow-sm rounded-xl'>
           <div className='flex items-center justify-between mb-4'>
             <h3 className='text-lg font-semibold text-gray-900'>
               System Status

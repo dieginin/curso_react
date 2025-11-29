@@ -42,12 +42,12 @@ export const Sidebar = ({ isCollapsed, onToggle }: Props) => {
       } flex flex-col`}
     >
       {/* Header */}
-      <div className='p-4 border-b border-gray-200 flex items-center justify-between h-18'>
+      <div className='flex items-center justify-between p-4 border-b border-gray-200 h-18'>
         {!isCollapsed && <Logo subtitle='Admin' />}
 
         <button
           onClick={onToggle}
-          className='p-2 rounded-lg hover:bg-gray-100 transition-colors'
+          className='p-2 transition-colors rounded-lg hover:bg-gray-100'
         >
           {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
         </button>
@@ -82,8 +82,8 @@ export const Sidebar = ({ isCollapsed, onToggle }: Props) => {
       {/* User Profile */}
       {!isCollapsed && (
         <div className='p-4 border-t border-gray-200'>
-          <div className='flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer'>
-            <div className='w-10 h-10 bg-linear-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold'>
+          <div className='flex items-center p-3 space-x-3 transition-colors rounded-lg cursor-pointer hover:bg-gray-50'>
+            <div className='flex items-center justify-center w-10 h-10 font-semibold text-white rounded-full bg-linear-to-br from-blue-500 to-purple-600'>
               JD
             </div>
             <div className='flex-1 min-w-0'>
