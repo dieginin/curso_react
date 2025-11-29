@@ -10,6 +10,7 @@ import {
   ShoppingCart,
   Users,
 } from "lucide-react"
+import { Link, useLocation } from "react-router"
 
 import { Logo } from "@/components/shared/Logo"
 
@@ -19,16 +20,20 @@ interface Props {
 }
 
 export const Sidebar = ({ isCollapsed, onToggle }: Props) => {
+  const { pathname } = useLocation()
+
   const menuItems = [
-    { icon: Home, label: "Dashboard", active: true },
-    { icon: BarChart3, label: "Analytics" },
-    { icon: Users, label: "Users" },
+    { icon: Home, label: "Dashboard", to: "/admin" },
+    { icon: BarChart3, label: "Productos", to: "/admin/products" },
+    { icon: Users, label: "Usuarios" },
     { icon: ShoppingCart, label: "Orders" },
-    { icon: FileText, label: "Reports" },
-    { icon: Bell, label: "Notifications" },
-    { icon: Settings, label: "Settings" },
-    { icon: HelpCircle, label: "Help" },
+    { icon: FileText, label: "Reportes" },
+    { icon: Bell, label: "Notificaciones" },
+    { icon: Settings, label: "Ajustes" },
+    { icon: HelpCircle, label: "Ayuda" },
   ]
+
+  const isActiveRoute = (to: string) => to === pathname
 
   return (
     <div
@@ -55,10 +60,10 @@ export const Sidebar = ({ isCollapsed, onToggle }: Props) => {
             const Icon = item.icon
             return (
               <li key={index}>
-                <a
-                  href='#'
+                <Link
+                  to={item.to || "/admin"}
                   className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 group ${
-                    item.active
+                    isActiveRoute(item.to || "")
                       ? "bg-blue-50 text-blue-600 border-r-2 border-blue-600"
                       : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                   }`}
@@ -67,7 +72,7 @@ export const Sidebar = ({ isCollapsed, onToggle }: Props) => {
                   {!isCollapsed && (
                     <span className='font-medium'>{item.label}</span>
                   )}
-                </a>
+                </Link>
               </li>
             )
           })}
