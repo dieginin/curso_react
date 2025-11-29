@@ -1,6 +1,10 @@
 import { Bell, MessageSquare, Search, Settings } from "lucide-react"
 
+import { useAuthStore } from "@/auth/store/auth.store"
+
 export const Header = () => {
+  const { user } = useAuthStore()
+
   return (
     <header className='px-6 py-4 bg-white border-b border-gray-200 h-18'>
       <div className='flex items-center justify-between'>
@@ -35,7 +39,7 @@ export const Header = () => {
           </button>
 
           <div className='flex items-center justify-center w-8 h-8 text-sm font-semibold text-white transition-shadow rounded-full cursor-pointer bg-linear-to-br from-blue-500 to-purple-600 hover:shadow-lg'>
-            JD
+            {user?.fullName.split(" ").map((word) => word[0])}
           </div>
         </div>
       </div>
