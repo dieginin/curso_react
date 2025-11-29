@@ -6,11 +6,12 @@ import { useState, type FormEvent } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Logo } from "@/components/shared/Logo"
-import { loginAction } from "@/auth/actions/login.action"
 import { toast } from "sonner"
+import { useAuthStore } from "@/auth/store/auth.store"
 
 export const LoginPage = () => {
   const navigate = useNavigate()
+  const { login } = useAuthStore()
   const [isLoading, setIsLoading] = useState(false)
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
@@ -21,14 +22,10 @@ export const LoginPage = () => {
     const email = formData.get("email") as string
     const password = formData.get("password") as string
 
-    try {
-      const data = await loginAction(email, password)
-      localStorage.setItem("token", data.token)
-      navigate("/")
-    } catch {
-      toast.error("Credenciales invalidas")
-    }
+    const isLoginSuccessful = await login(email, password)
+    if (isLoginSuccessful) return navigate("/")
 
+    toast.error("Credenciales invalidas")
     setIsLoading(false)
   }
 
