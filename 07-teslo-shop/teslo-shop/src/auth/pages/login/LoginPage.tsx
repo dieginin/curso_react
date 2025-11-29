@@ -1,17 +1,28 @@
 import { Card, CardContent } from "@/components/ui/card"
 
 import { Button } from "@/components/ui/button"
+import type { FormEvent } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Link } from "react-router"
 import { Logo } from "@/components/shared/Logo"
 
 export const LoginPage = () => {
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    const formData = new FormData(event.target as HTMLFormElement)
+    const email = formData.get("email") as string
+    const password = formData.get("password") as string
+
+    console.log({ email, password })
+  }
+
   return (
     <div className='flex flex-col gap-6'>
       <Card className='p-0 overflow-hidden'>
         <CardContent className='p-0 grid md:grid-cols-2'>
-          <form className='p-6 md:p-8'>
+          <form className='p-6 md:p-8' onSubmit={handleLogin}>
             <div className='flex flex-col gap-6'>
               <div className='flex flex-col items-center text-center'>
                 <Logo subtitle='Ingreso' />
@@ -24,6 +35,7 @@ export const LoginPage = () => {
                 <Input
                   id='email'
                   type='email'
+                  name='email'
                   placeholder='correo@ejemplo.com'
                   required
                 />
@@ -41,6 +53,7 @@ export const LoginPage = () => {
                 <Input
                   id='password'
                   type='password'
+                  name='password'
                   placeholder='contraseña'
                   required
                 />
