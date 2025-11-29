@@ -13,6 +13,7 @@ import {
 import { Link, useLocation } from "react-router"
 
 import { Logo } from "@/components/shared/Logo"
+import { useAuthStore } from "@/auth/store/auth.store"
 
 interface Props {
   isCollapsed: boolean
@@ -21,6 +22,7 @@ interface Props {
 
 export const Sidebar = ({ isCollapsed, onToggle }: Props) => {
   const { pathname } = useLocation()
+  const { user } = useAuthStore()
 
   const menuItems = [
     { icon: Home, label: "Dashboard", to: "/admin" },
@@ -87,13 +89,13 @@ export const Sidebar = ({ isCollapsed, onToggle }: Props) => {
         <div className='p-4 border-t border-gray-200'>
           <div className='flex items-center p-3 space-x-3 transition-colors rounded-lg cursor-pointer hover:bg-gray-50'>
             <div className='flex items-center justify-center w-10 h-10 font-semibold text-white rounded-full bg-linear-to-br from-blue-500 to-purple-600'>
-              JD
+              {user?.fullName.split(" ").map((word) => word[0])}
             </div>
             <div className='flex-1 min-w-0'>
               <p className='text-sm font-medium text-gray-900 truncate'>
-                John Doe
+                {user?.fullName}
               </p>
-              <p className='text-xs text-gray-500 truncate'>john@company.com</p>
+              <p className='text-xs text-gray-500 truncate'>{user?.email}</p>
             </div>
           </div>
         </div>

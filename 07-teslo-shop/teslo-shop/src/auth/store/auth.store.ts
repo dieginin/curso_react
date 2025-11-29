@@ -2,14 +2,19 @@ import type { User } from "@/interfaces/user.interface"
 import { create } from "zustand"
 import { loginAction } from "../actions/login.action"
 
+type AuthStatus = "authenticated" | "non-authenticated" | "checking"
+
 interface AuthState {
   //  Properties
-  user: User | null
+  authStatus: AuthStatus
   token: string | null
+  user: User | null
 
   //  Getters
+
   //  Methods
   login: (email: string, password: string) => Promise<boolean>
+  logout: () => void
 }
 
 export const useAuthStore = create<AuthState>()((set) => {
@@ -20,15 +25,21 @@ export const useAuthStore = create<AuthState>()((set) => {
       set({ user: data.user, token: data.token })
       return true
     } catch {
-      localStorage.removeItem("token")
-      set({ user: null, token: null })
+      logoutUser()
       return false
     }
   }
 
+  const logoutUser = () => {
+    localStorage.removeItem("token")
+    set({ user: null, token: null })
+  }
+
   return {
-    user: null,
+    authStatus: "checking",
     token: null,
+    user: null,
     login: loginUser,
+    logout: logoutUser,
   }
 })
