@@ -1,4 +1,4 @@
-import { Search } from "lucide-react"
+import { Menu, Search } from "lucide-react"
 import { useRef, type KeyboardEvent } from "react"
 
 import { Button } from "@/components/ui/button"
@@ -35,7 +35,12 @@ export const Header = () => {
       <div className='container px-4 mx-auto lg:px-8'>
         <div className='flex items-center justify-between h-16'>
           {/* Logo */}
-          <Logo />
+          <div className='flex items-center space-x-4'>
+            <Button variant='ghost' size='icon' className='md:hidden'>
+              <Menu className='h-5 w-5' />
+            </Button>
+            <Logo />
+          </div>
 
           {/* Navigation - Desktop */}
           <nav className='items-center hidden md:flex space-x-8'>
