@@ -1,21 +1,35 @@
 import { Card, CardContent } from "@/components/ui/card"
+import { Link, useNavigate } from "react-router"
 
 import { Button } from "@/components/ui/button"
-import type { FormEvent } from "react"
+import { useState, type FormEvent } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Link } from "react-router"
 import { Logo } from "@/components/shared/Logo"
+import { loginAction } from "@/auth/actions/login.action"
+import { toast } from "sonner"
 
 export const LoginPage = () => {
+  const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false)
+
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setIsLoading(true)
 
     const formData = new FormData(event.target as HTMLFormElement)
     const email = formData.get("email") as string
     const password = formData.get("password") as string
 
-    console.log({ email, password })
+    try {
+      const data = await loginAction(email, password)
+      localStorage.setItem("token", data.token)
+      navigate("/")
+    } catch {
+      toast.error("Credenciales invalidas")
+    }
+
+    setIsLoading(false)
   }
 
   return (
@@ -58,7 +72,7 @@ export const LoginPage = () => {
                   required
                 />
               </div>
-              <Button type='submit' className='w-full'>
+              <Button type='submit' className='w-full' disabled={isLoading}>
                 Ingresar
               </Button>
               <div className='relative text-sm text-center after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border'>
