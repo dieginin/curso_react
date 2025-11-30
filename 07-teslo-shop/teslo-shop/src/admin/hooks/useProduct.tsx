@@ -1,5 +1,7 @@
+import { useMutation, useQuery } from "@tanstack/react-query"
+
+import type { Product } from "@/interfaces/product.interface"
 import { getProductById } from "../actions/get-product-by-id.action"
-import { useQuery } from "@tanstack/react-query"
 
 export const useProduct = (id: string) => {
   const query = useQuery({
@@ -11,6 +13,11 @@ export const useProduct = (id: string) => {
   })
 
   //   TODO mutación
+  //   const mutation = useMutation()
 
-  return query
+  const handleSubmit = async (productLike: Partial<Product>): Promise<void> => {
+    console.log({ productLike })
+  }
+
+  return { ...query, handleSubmit }
 }

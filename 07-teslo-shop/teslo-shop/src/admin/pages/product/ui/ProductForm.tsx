@@ -14,9 +14,10 @@ interface Props {
   title: string
   subtitle: string
   product: Product
+  onSubmit: (productLike: Partial<Product>) => Promise<void>
 }
 
-export const ProductForm = ({ title, subtitle, product }: Props) => {
+export const ProductForm = ({ title, subtitle, product, onSubmit }: Props) => {
   const [dragActive, setDragActive] = useState(false)
   const {
     register,
@@ -82,11 +83,6 @@ export const ProductForm = ({ title, subtitle, product }: Props) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
     console.log(files)
-  }
-
-  // TODO remover
-  const onSubmit = (productLike: Product) => {
-    console.log("onSubmit", productLike)
   }
 
   return (
