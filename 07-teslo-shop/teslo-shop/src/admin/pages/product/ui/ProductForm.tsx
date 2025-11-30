@@ -14,10 +14,17 @@ interface Props {
   title: string
   subtitle: string
   product: Product
+  disabled?: boolean
   onSubmit: (productLike: Partial<Product>) => Promise<void>
 }
 
-export const ProductForm = ({ title, subtitle, product, onSubmit }: Props) => {
+export const ProductForm = ({
+  title,
+  subtitle,
+  product,
+  disabled = false,
+  onSubmit,
+}: Props) => {
   const [dragActive, setDragActive] = useState(false)
   const {
     register,
@@ -90,14 +97,14 @@ export const ProductForm = ({ title, subtitle, product, onSubmit }: Props) => {
       <div className='flex items-center justify-between'>
         <Title title={title} subtitle={subtitle} />
         <div className='flex justify-end gap-4 mb-10'>
-          <Button variant='outline'>
+          <Button type='button' variant='outline' disabled={disabled}>
             <Link to='/admin/products' className='flex items-center gap-2'>
               <X className='w-4 h-4' />
               Cancelar
             </Link>
           </Button>
 
-          <Button>
+          <Button type='submit' disabled={disabled}>
             <SaveAll className='w-4 h-4' />
             Guardar cambios
           </Button>
@@ -124,6 +131,7 @@ export const ProductForm = ({ title, subtitle, product, onSubmit }: Props) => {
                     {...register("title", {
                       required: true,
                     })}
+                    disabled={disabled}
                     className={cn(
                       "w-full px-4 py-3 border rounded-lg border-slate-300 transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
                       { "border-red-500": errors.title }
@@ -149,6 +157,7 @@ export const ProductForm = ({ title, subtitle, product, onSubmit }: Props) => {
                         valueAsNumber: true,
                         min: 1,
                       })}
+                      disabled={disabled}
                       className={cn(
                         "w-full px-4 py-3 border rounded-lg border-slate-300 transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
                         { "border-red-500": errors.price }
@@ -173,6 +182,7 @@ export const ProductForm = ({ title, subtitle, product, onSubmit }: Props) => {
                         valueAsNumber: true,
                         min: 1,
                       })}
+                      disabled={disabled}
                       className={cn(
                         "w-full px-4 py-3 border rounded-lg border-slate-300 transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
                         { "border-red-500": errors.stock }
@@ -199,6 +209,7 @@ export const ProductForm = ({ title, subtitle, product, onSubmit }: Props) => {
                         !/\s/.test(value) ||
                         "El slug no puede contener espacios en blanco",
                     })}
+                    disabled={disabled}
                     className={cn(
                       "w-full px-4 py-3 border rounded-lg border-slate-300 transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
                       { "border-red-500": errors.slug }
@@ -218,6 +229,7 @@ export const ProductForm = ({ title, subtitle, product, onSubmit }: Props) => {
                   </label>
                   <select
                     {...register("gender")}
+                    disabled={disabled}
                     className='w-full px-4 py-3 transition-all duration-200 border rounded-lg border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                   >
                     <option value='men'>Hombre</option>
@@ -235,6 +247,7 @@ export const ProductForm = ({ title, subtitle, product, onSubmit }: Props) => {
                     {...register("description", {
                       required: true,
                     })}
+                    disabled={disabled}
                     rows={5}
                     className={cn(
                       "w-full px-4 py-3 border rounded-lg border-slate-300 transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
@@ -271,6 +284,7 @@ export const ProductForm = ({ title, subtitle, product, onSubmit }: Props) => {
                       <button
                         type='button'
                         onClick={() => removeSize(size)}
+                        disabled={disabled}
                         className='ml-2 text-blue-600 transition-colors duration-200 cursor-pointer hover:text-blue-800'
                       >
                         <X className='w-3 h-3' />
@@ -288,7 +302,7 @@ export const ProductForm = ({ title, subtitle, product, onSubmit }: Props) => {
                       key={size}
                       type='button'
                       onClick={() => addSize(size)}
-                      disabled={selectedSizes.includes(size)}
+                      disabled={selectedSizes.includes(size) || disabled}
                       className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-200 ${
                         selectedSizes.includes(size)
                           ? "bg-slate-100 text-slate-400 cursor-not-allowed"
@@ -319,6 +333,7 @@ export const ProductForm = ({ title, subtitle, product, onSubmit }: Props) => {
                       {tag}
                       <button
                         onClick={() => removeTag(tag)}
+                        disabled={disabled}
                         className='ml-2 text-green-600 transition-colors duration-200 hover:text-green-800'
                       >
                         <X className='w-3 h-3' />
@@ -337,12 +352,14 @@ export const ProductForm = ({ title, subtitle, product, onSubmit }: Props) => {
                         addTag()
                       }
                     }}
+                    disabled={disabled}
                     placeholder='Añadir nueva etiqueta...'
                     className='flex-1 px-4 py-2 transition-all duration-200 border rounded-lg border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                   />
                   <Button
                     type='button'
                     onClick={addTag}
+                    disabled={disabled}
                     className='px-4 py-2rounded-lg '
                   >
                     <Plus className='w-4 h-4' />
@@ -376,6 +393,7 @@ export const ProductForm = ({ title, subtitle, product, onSubmit }: Props) => {
                   type='file'
                   multiple
                   accept='image/*'
+                  disabled={disabled}
                   className='absolute inset-0 w-full h-full opacity-0 cursor-pointer'
                   onChange={handleFileChange}
                 />
@@ -410,7 +428,10 @@ export const ProductForm = ({ title, subtitle, product, onSubmit }: Props) => {
                           className='object-cover w-full h-full rounded-lg'
                         />
                       </div>
-                      <button className='absolute p-1 text-white transition-opacity duration-200 bg-red-500 rounded-full opacity-0 top-2 right-2 group-hover:opacity-100'>
+                      <button
+                        hidden={disabled}
+                        className='absolute p-1 text-white transition-opacity duration-200 bg-red-500 rounded-full opacity-0 top-2 right-2 group-hover:opacity-100'
+                      >
                         <X className='w-3 h-3' />
                       </button>
                       <p className='mt-1 text-xs truncate text-slate-600'>

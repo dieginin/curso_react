@@ -40,6 +40,7 @@ export const AdminProductPage = () => {
       subtitle={subtitle}
       product={product}
       onSubmit={handleSubmit}
+      disabled={mutation.isPending}
     />
   )
 }
