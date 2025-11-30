@@ -39,7 +39,7 @@ export const Header = () => {
           {/* Logo */}
           <div className='flex items-center space-x-4'>
             <Button variant='ghost' size='icon' className='md:hidden'>
-              <Menu className='h-5 w-5' />
+              <Menu className='w-5 h-5' />
             </Button>
             <Logo />
           </div>

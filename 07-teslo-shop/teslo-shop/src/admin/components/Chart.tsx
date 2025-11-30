@@ -17,7 +17,7 @@ export const Chart = ({ title, data }: Props) => {
             </div>
             <div className='flex-1 h-3 bg-gray-200 rounded-full'>
               <div
-                className='h-3 transition-all duration-1000 ease-out rounded-full bg-linear-to-r from-blue-500 to-blue-600'
+                className='h-3 rounded-full transition-all duration-1000 ease-out bg-linear-to-r from-blue-500 to-blue-600'
                 style={{ width: `${(item.value / maxValue) * 100}%` }}
               ></div>
             </div>

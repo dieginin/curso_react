@@ -18,27 +18,27 @@ export const Header = () => {
             <input
               type='text'
               placeholder='Search...'
-              className='w-full py-2 pl-10 pr-4 transition-all border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+              className='w-full py-2 pl-10 pr-4 border border-gray-300 rounded-lg transition-all focus:ring-2 focus:ring-blue-500 focus:border-transparent'
             />
           </div>
         </div>
 
         {/* Actions */}
         <div className='flex items-center space-x-4'>
-          <button className='relative p-2 text-gray-600 transition-colors rounded-lg hover:bg-gray-100'>
+          <button className='relative p-2 text-gray-600 rounded-lg transition-colors hover:bg-gray-100'>
             <Bell size={20} />
             <span className='absolute w-3 h-3 bg-red-500 rounded-full -top-1 -right-1'></span>
           </button>
 
-          <button className='p-2 text-gray-600 transition-colors rounded-lg hover:bg-gray-100'>
+          <button className='p-2 text-gray-600 rounded-lg transition-colors hover:bg-gray-100'>
             <MessageSquare size={20} />
           </button>
 
-          <button className='p-2 text-gray-600 transition-colors rounded-lg hover:bg-gray-100'>
+          <button className='p-2 text-gray-600 rounded-lg transition-colors hover:bg-gray-100'>
             <Settings size={20} />
           </button>
 
-          <div className='flex items-center justify-center w-8 h-8 text-sm font-semibold text-white transition-shadow rounded-full cursor-pointer bg-linear-to-br from-blue-500 to-purple-600 hover:shadow-lg'>
+          <div className='flex items-center justify-center w-8 h-8 text-sm font-semibold text-white rounded-full cursor-pointer transition-shadow bg-linear-to-br from-blue-500 to-purple-600 hover:shadow-lg'>
             {user?.fullName.split(" ").map((word) => word[0])}
           </div>
         </div>

@@ -71,14 +71,14 @@ export const DashboardPage = () => {
       />
 
       {/* Stats Grid */}
-      <div className='grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4'>
+      <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>
         {stats.map((stat, index) => (
           <StatCard key={index} {...stat} />
         ))}
       </div>
 
       {/* Charts and Activity Section */}
-      <div className='grid grid-cols-1 gap-6 mb-8 lg:grid-cols-3'>
+      <div className='mb-8 grid grid-cols-1 gap-6 lg:grid-cols-3'>
         <div className='space-y-6 lg:col-span-2'>
           <Chart title='Traffic Sources' data={chartData} />
           <Chart title='Performance Metrics' data={performanceData} />

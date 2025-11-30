@@ -24,7 +24,7 @@ export const StatCard = ({
   }[changeType]
 
   return (
-    <div className='p-6 transition-shadow bg-white border border-gray-200 shadow-sm rounded-xl hover:shadow-md'>
+    <div className='p-6 bg-white border border-gray-200 transition-shadow shadow-sm rounded-xl hover:shadow-md'>
       <div className='flex items-center justify-between'>
         <div>
           <p className='mb-1 text-sm font-medium text-gray-600'>{title}</p>

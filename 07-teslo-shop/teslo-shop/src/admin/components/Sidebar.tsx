@@ -52,7 +52,7 @@ export const Sidebar = ({ isCollapsed, onToggle }: Props) => {
 
         <button
           onClick={onToggle}
-          className='p-2 transition-colors rounded-lg hover:bg-gray-100'
+          className='p-2 rounded-lg transition-colors hover:bg-gray-100'
         >
           {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
         </button>
@@ -87,7 +87,7 @@ export const Sidebar = ({ isCollapsed, onToggle }: Props) => {
       {/* User Profile */}
       {!isCollapsed && (
         <div className='p-4 border-t border-gray-200'>
-          <div className='flex items-center p-3 space-x-3 transition-colors rounded-lg cursor-pointer hover:bg-gray-50'>
+          <div className='flex items-center p-3 rounded-lg cursor-pointer space-x-3 transition-colors hover:bg-gray-50'>
             <div className='flex items-center justify-center w-10 h-10 font-semibold text-white rounded-full bg-linear-to-br from-blue-500 to-purple-600'>
               {user?.fullName.split(" ").map((word) => word[0])}
             </div>
