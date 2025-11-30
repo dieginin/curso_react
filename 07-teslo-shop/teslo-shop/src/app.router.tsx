@@ -10,6 +10,8 @@ import { ProductPage } from "./shop/pages/product/ProductPage"
 import { RegisterPage } from "./auth/pages/register/RegisterPage"
 import { ShopLayout } from "./shop/layouts/ShopLayout"
 import { lazy } from "react"
+import { NonAuthenticatedRoute } from "./components/routes/NonAuthenticatedRoute"
+import { AdminRoute } from "./components/routes/AdminRoute"
 
 const AuthLayout = lazy(() => import("./auth/layouts/AuthLayout"))
 const AdminLayout = lazy(() => import("./admin/layouts/AdminLayout"))
@@ -35,7 +37,7 @@ const mainRoutes: RouteObject = {
 
 const authRoutes: RouteObject = {
   path: "/auth",
-  element: <AuthLayout />,
+  element: <NonAuthenticatedRoute children={<AuthLayout />} />,
   children: [
     {
       index: true,
@@ -54,7 +56,7 @@ const authRoutes: RouteObject = {
 
 const adminRoutes: RouteObject = {
   path: "/admin",
-  element: <AdminLayout />,
+  element: <AdminRoute children={<AdminLayout />} />,
   children: [
     {
       index: true,
