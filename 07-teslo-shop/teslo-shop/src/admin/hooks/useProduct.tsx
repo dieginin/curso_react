@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 
-import type { Product } from "@/interfaces/product.interface"
+import { createUpdateProduct } from "../actions/create-update-product.action"
 import { getProductById } from "../actions/get-product-by-id.action"
 
 export const useProduct = (id: string) => {
@@ -12,12 +12,14 @@ export const useProduct = (id: string) => {
     // enabled: !!id,
   })
 
-  //   TODO mutación
-  //   const mutation = useMutation()
+  const mutation = useMutation({
+    mutationFn: createUpdateProduct,
+    onSuccess: (product) => console.log("Todo salio bien", product),
+  })
 
-  const handleSubmit = async (productLike: Partial<Product>): Promise<void> => {
-    console.log({ productLike })
-  }
+  // const handleSubmit = async (productLike: Partial<Product>): Promise<void> => {
+  //   console.log({ productLike })
+  // }
 
-  return { ...query, handleSubmit }
+  return { ...query, mutation }
 }
