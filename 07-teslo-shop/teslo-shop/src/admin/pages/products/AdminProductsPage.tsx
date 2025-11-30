@@ -32,7 +32,7 @@ export const AdminProductsPage = () => {
           subtitle='Aquí puedes ver y administrar tus productos'
         />
 
-        <div className='flex justify-end gap-4 mb-10'>
+        <div className='flex justify-end mb-10 gap-4'>
           <Link to='/admin/products/new'>
             <Button>
               <PlusIcon />
