@@ -33,7 +33,7 @@ export const RegisterPage = () => {
   return (
     <div className='flex flex-col gap-6'>
       <Card className='p-0 overflow-hidden'>
-        <CardContent className='grid p-0 md:grid-cols-2'>
+        <CardContent className='p-0 grid md:grid-cols-2'>
           <form className='p-6 md:p-8' onSubmit={handleRegister}>
             <div className='flex flex-col gap-6'>
               <div className='flex flex-col items-center text-center'>
