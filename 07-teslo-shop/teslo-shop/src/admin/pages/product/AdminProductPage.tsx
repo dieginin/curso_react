@@ -1,9 +1,11 @@
+import { Link, Navigate } from "react-router"
 import { Plus, SaveAll, Tag, Upload, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Link } from "react-router"
+import { FullScreenLoading } from "@/components/shared/FullScreenLoading"
 import { Title } from "@/admin/components/Title"
 import { useParams } from "react-router"
+import { useProduct } from "@/admin/hooks/useProduct"
 import { useState } from "react"
 
 interface Product {
@@ -21,6 +23,7 @@ interface Product {
 
 export const AdminProductPage = () => {
   const { id } = useParams()
+  const { data: product2, isLoading, isError } = useProduct(id || "")
 
   const productTitle = id === "new" ? "Nuevo producto" : "Editar producto"
   const productSubtitle =
@@ -51,6 +54,9 @@ export const AdminProductPage = () => {
   const [dragActive, setDragActive] = useState(false)
 
   const availableSizes = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL"]
+
+  if (isLoading) return <FullScreenLoading />
+  if (isError) return <Navigate to='/admin/products' />
 
   const handleInputChange = (field: keyof Product, value: string | number) => {
     setProduct((prev) => ({ ...prev, [field]: value }))
@@ -117,7 +123,7 @@ export const AdminProductPage = () => {
       <div className='flex items-center justify-between'>
         <Title title={productTitle} subtitle={productSubtitle} />
 
-        <div className='flex justify-end mb-10 gap-4'>
+        <div className='flex justify-end gap-4 mb-10'>
           <Button variant='outline'>
             <Link to='/admin/products' className='flex items-center gap-2'>
               <X className='w-4 h-4' />
@@ -151,7 +157,7 @@ export const AdminProductPage = () => {
                     type='text'
                     value={product.title}
                     onChange={(e) => handleInputChange("title", e.target.value)}
-                    className='w-full px-4 py-3 border rounded-lg transition-all duration-200 border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                    className='w-full px-4 py-3 transition-all duration-200 border rounded-lg border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                     placeholder='Título del producto'
                   />
                 </div>
@@ -167,7 +173,7 @@ export const AdminProductPage = () => {
                       onChange={(e) =>
                         handleInputChange("price", parseFloat(e.target.value))
                       }
-                      className='w-full px-4 py-3 border rounded-lg transition-all duration-200 border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                      className='w-full px-4 py-3 transition-all duration-200 border rounded-lg border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                       placeholder='Precio del producto'
                     />
                   </div>
@@ -182,7 +188,7 @@ export const AdminProductPage = () => {
                       onChange={(e) =>
                         handleInputChange("stock", parseInt(e.target.value))
                       }
-                      className='w-full px-4 py-3 border rounded-lg transition-all duration-200 border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                      className='w-full px-4 py-3 transition-all duration-200 border rounded-lg border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                       placeholder='Stock del producto'
                     />
                   </div>
@@ -196,7 +202,7 @@ export const AdminProductPage = () => {
                     type='text'
                     value={product.slug}
                     onChange={(e) => handleInputChange("slug", e.target.value)}
-                    className='w-full px-4 py-3 border rounded-lg transition-all duration-200 border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                    className='w-full px-4 py-3 transition-all duration-200 border rounded-lg border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                     placeholder='Slug del producto'
                   />
                 </div>
@@ -210,7 +216,7 @@ export const AdminProductPage = () => {
                     onChange={(e) =>
                       handleInputChange("gender", e.target.value)
                     }
-                    className='w-full px-4 py-3 border rounded-lg transition-all duration-200 border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                    className='w-full px-4 py-3 transition-all duration-200 border rounded-lg border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                   >
                     <option value='men'>Hombre</option>
                     <option value='women'>Mujer</option>
@@ -229,7 +235,7 @@ export const AdminProductPage = () => {
                       handleInputChange("description", e.target.value)
                     }
                     rows={5}
-                    className='w-full px-4 py-3 border rounded-lg resize-none transition-all duration-200 border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                    className='w-full px-4 py-3 transition-all duration-200 border rounded-lg resize-none border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                     placeholder='Descripción del producto'
                   />
                 </div>
@@ -260,7 +266,7 @@ export const AdminProductPage = () => {
                   ))}
                 </div>
 
-                <div className='flex flex-wrap pt-2 border-t gap-2 border-slate-200'>
+                <div className='flex flex-wrap gap-2 pt-2 border-t border-slate-200'>
                   <span className='mr-2 text-sm text-slate-600'>
                     Añadir tallas:
                   </span>
@@ -314,7 +320,7 @@ export const AdminProductPage = () => {
                     onChange={(e) => setNewTag(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && addTag()}
                     placeholder='Añadir nueva etiqueta...'
-                    className='flex-1 px-4 py-2 border rounded-lg transition-all duration-200 border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                    className='flex-1 px-4 py-2 transition-all duration-200 border rounded-lg border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                   />
                   <Button onClick={addTag} className='px-4 py-2rounded-lg '>
                     <Plus className='w-4 h-4' />
@@ -382,7 +388,7 @@ export const AdminProductPage = () => {
                           className='object-cover w-full h-full rounded-lg'
                         />
                       </div>
-                      <button className='absolute p-1 text-white bg-red-500 rounded-full opacity-0 transition-opacity duration-200 top-2 right-2 group-hover:opacity-100'>
+                      <button className='absolute p-1 text-white transition-opacity duration-200 bg-red-500 rounded-full opacity-0 top-2 right-2 group-hover:opacity-100'>
                         <X className='w-3 h-3' />
                       </button>
                       <p className='mt-1 text-xs truncate text-slate-600'>
