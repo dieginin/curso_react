@@ -10,18 +10,21 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { RouterProvider } from "react-router"
 import { Toaster } from "sonner"
 import { appRouter } from "./app.router"
-import { checkAuthAction } from "./auth/actions/check-auth.action"
+import { useAuthStore } from "./auth/store/auth.store"
 
 const queryClient = new QueryClient()
 
 const CheckAuthProvider = ({ children }: PropsWithChildren) => {
+  const { checkAuthStatus } = useAuthStore()
+
   const { isLoading } = useQuery({
     queryKey: ["auth"],
-    queryFn: checkAuthAction,
+    queryFn: checkAuthStatus,
     retry: false,
     refetchInterval: 1000 * 60 * 1.5,
     refetchOnWindowFocus: true,
   })
+
   if (isLoading) return <FullScreenLoading />
   return children
 }
