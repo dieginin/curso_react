@@ -1,8 +1,6 @@
 import type { ProductsResponse } from "@/interfaces/products.response"
 import { tesloApi } from "@/api/teslo.api"
-
-const transformImageUrl = (image: string) =>
-  `${import.meta.env.VITE_API_URL}/files/product/${image}`
+import { transformImageUrl } from "@/lib/transformImageUrl"
 
 interface Options {
   limit?: number | string
@@ -23,13 +21,10 @@ export const getProducts = async (
     params: { limit, offset, gender, sizes, maxPrice, minPrice, q: query },
   })
 
-  const updatedProducts = data.products.map((product) => ({
+  const products = data.products.map((product) => ({
     ...product,
     images: product.images.map(transformImageUrl),
   }))
 
-  return {
-    ...data,
-    products: updatedProducts,
-  }
+  return { ...data, products }
 }
