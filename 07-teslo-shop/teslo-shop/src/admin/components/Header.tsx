@@ -1,9 +1,22 @@
 import { Bell, MessageSquare, Search, Settings } from "lucide-react"
 
+import type { KeyboardEvent } from "react"
 import { useAuthStore } from "@/auth/store/auth.store"
+import { useNavigate } from "react-router"
+import { useSearchInput } from "@/hooks/useSearchInput"
 
 export const Header = () => {
+  const { inputRef, query, handleSearch } = useSearchInput()
   const { user } = useAuthStore()
+
+  const navigate = useNavigate()
+
+  const customHandleSearch = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      navigate("/admin/products")
+      handleSearch(event)
+    }
+  }
 
   return (
     <header className='px-6 py-4 bg-white border-b border-gray-200 h-18'>
@@ -16,9 +29,12 @@ export const Header = () => {
               size={20}
             />
             <input
+              ref={inputRef}
               type='text'
               placeholder='Search...'
               className='w-full py-2 pl-10 pr-4 border border-gray-300 rounded-lg transition-all focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+              onKeyDown={customHandleSearch}
+              defaultValue={query}
             />
           </div>
         </div>
