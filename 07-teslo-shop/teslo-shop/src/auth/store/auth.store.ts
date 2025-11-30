@@ -12,6 +12,7 @@ interface AuthState {
   user: User | null
 
   //  Getters
+  isAdmin: () => boolean
 
   //  Methods
   checkAuthStatus: () => Promise<boolean>
@@ -19,7 +20,20 @@ interface AuthState {
   logout: () => void
 }
 
-export const useAuthStore = create<AuthState>()((set) => {
+export const useAuthStore = create<AuthState>()((set, get) => {
+  const isAdmin = () => !!get().user?.roles.includes("admin")
+
+  const checkAuthentication = async () => {
+    try {
+      const { user, token } = await checkAuthAction()
+      set({ user, token, authStatus: "authenticated" })
+      return true
+    } catch {
+      set({ user: null, token: null, authStatus: "non-authenticated" })
+      return false
+    }
+  }
+
   const loginUser = async (email: string, password: string) => {
     try {
       const data = await loginAction(email, password)
@@ -37,20 +51,13 @@ export const useAuthStore = create<AuthState>()((set) => {
     set({ user: null, token: null, authStatus: "non-authenticated" })
   }
 
-  const checkAuthentication = async () => {
-    try {
-      const { user, token } = await checkAuthAction()
-      set({ user, token, authStatus: "authenticated" })
-      return true
-    } catch {
-      set({ user: null, token: null, authStatus: "non-authenticated" })
-      return false
-    }
-  }
   return {
     authStatus: "checking",
     token: null,
     user: null,
+
+    isAdmin: isAdmin,
+
     checkAuthStatus: checkAuthentication,
     login: loginUser,
     logout: logoutUser,

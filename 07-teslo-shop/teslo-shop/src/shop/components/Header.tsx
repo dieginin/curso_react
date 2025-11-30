@@ -10,7 +10,7 @@ import { useAuthStore } from "@/auth/store/auth.store"
 
 export const Header = () => {
   const [searchParams, setSearchParams] = useSearchParams()
-  const { user, logout } = useAuthStore()
+  const { authStatus, logout, isAdmin } = useAuthStore()
   const { gender } = useParams()
 
   const inputRef = useRef<HTMLInputElement>(null)
@@ -45,7 +45,7 @@ export const Header = () => {
           </div>
 
           {/* Navigation - Desktop */}
-          <nav className='items-center hidden md:flex space-x-8'>
+          <nav className='items-center hidden space-x-8 md:flex'>
             <Link
               to='/'
               className={cn(
@@ -86,9 +86,9 @@ export const Header = () => {
 
           {/* Search and Cart */}
           <div className='flex items-center space-x-4'>
-            <div className='items-center hidden md:flex space-x-2'>
+            <div className='items-center hidden space-x-2 md:flex'>
               <div className='relative'>
-                <Search className='absolute w-4 h-4 left-3 top-1/2 -translate-y-1/2 text-muted-foreground' />
+                <Search className='absolute w-4 h-4 -translate-y-1/2 left-3 top-1/2 text-muted-foreground' />
                 <Input
                   ref={inputRef}
                   placeholder='Buscar productos...'
@@ -103,7 +103,7 @@ export const Header = () => {
               <Search className='w-5 h-5' />
             </Button>
 
-            {!user ? (
+            {authStatus === "non-authenticated" ? (
               <Link to='/auth/login'>
                 <Button variant='default' size='sm' className='ml-2'>
                   Login
@@ -120,7 +120,7 @@ export const Header = () => {
               </Button>
             )}
 
-            {user?.roles.includes("admin") && (
+            {isAdmin() && (
               <Link to='admin'>
                 <Button variant='destructive' size='sm' className='ml-2'>
                   Admin
