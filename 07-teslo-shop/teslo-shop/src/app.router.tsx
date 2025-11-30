@@ -1,4 +1,4 @@
-import { Navigate, createBrowserRouter } from "react-router"
+import { Navigate, createBrowserRouter, type RouteObject } from "react-router"
 
 import { AdminProductPage } from "./admin/pages/product/AdminProductPage"
 import { AdminProductsPage } from "./admin/pages/products/AdminProductsPage"
@@ -14,7 +14,7 @@ import { lazy } from "react"
 const AuthLayout = lazy(() => import("./auth/layouts/AuthLayout"))
 const AdminLayout = lazy(() => import("./admin/layouts/AdminLayout"))
 
-const mainRoutes = {
+const mainRoutes: RouteObject = {
   path: "/",
   element: <ShopLayout />,
   children: [
@@ -33,7 +33,7 @@ const mainRoutes = {
   ],
 }
 
-const authRoutes = {
+const authRoutes: RouteObject = {
   path: "/auth",
   element: <AuthLayout />,
   children: [
@@ -52,7 +52,7 @@ const authRoutes = {
   ],
 }
 
-const adminRoutes = {
+const adminRoutes: RouteObject = {
   path: "/admin",
   element: <AdminLayout />,
   children: [
@@ -71,7 +71,7 @@ const adminRoutes = {
   ],
 }
 
-const notFoundRoute = {
+const notFoundRoute: RouteObject = {
   path: "*",
   element: <Navigate to='/' />,
 }
