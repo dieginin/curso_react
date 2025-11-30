@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Link } from "react-router"
 import type { Product } from "@/interfaces/product.interface"
 import { Title } from "@/admin/components/Title"
+import { cn } from "@/lib/utils"
 import { useForm } from "react-hook-form"
 import { useState } from "react"
 
@@ -17,7 +18,11 @@ interface Props {
 
 export const ProductForm = ({ title, subtitle, product }: Props) => {
   const [dragActive, setDragActive] = useState(false)
-  const { register } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     defaultValues: product,
   })
 
@@ -76,8 +81,13 @@ export const ProductForm = ({ title, subtitle, product }: Props) => {
     console.log(files)
   }
 
+  // TODO remover
+  const onSubmit = (productLike: Product) => {
+    console.log("onSubmite", productLike)
+  }
+
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className='flex items-center justify-between'>
         <Title title={title} subtitle={subtitle} />
         <div className='flex justify-end gap-4 mb-10'>
@@ -112,10 +122,20 @@ export const ProductForm = ({ title, subtitle, product }: Props) => {
                   </label>
                   <input
                     type='text'
-                    {...register("title")}
-                    className='w-full px-4 py-3 transition-all duration-200 border rounded-lg border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                    {...register("title", {
+                      required: true,
+                    })}
+                    className={cn(
+                      "w-full px-4 py-3 border rounded-lg border-slate-300 transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                      { "border-red-500": errors.title }
+                    )}
                     placeholder='Título del producto'
                   />
+                  {errors.title && (
+                    <p className='text-sm text-red-500'>
+                      El titulo es requerido
+                    </p>
+                  )}
                 </div>
 
                 <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
@@ -402,6 +422,6 @@ export const ProductForm = ({ title, subtitle, product }: Props) => {
           </div>
         </div>
       </div>
-    </>
+    </form>
   )
 }
