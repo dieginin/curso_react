@@ -10,12 +10,18 @@ import { cn } from "@/lib/utils"
 
 const availableSizes: Size[] = ["XS", "S", "M", "L", "XL", "XXL"]
 
+interface FormInput extends Product {
+  files?: File[]
+}
+
 interface Props {
   title: string
   subtitle: string
   product: Product
   disabled?: boolean
-  onSubmit: (productLike: Partial<Product>) => Promise<void>
+  onSubmit: (
+    productLike: Partial<Product> & { files?: File[] }
+  ) => Promise<void>
 }
 
 export const ProductForm = ({
@@ -34,7 +40,7 @@ export const ProductForm = ({
     getValues,
     setValue,
     control,
-  } = useForm({
+  } = useForm<FormInput>({
     defaultValues: product,
   })
 
@@ -84,6 +90,8 @@ export const ProductForm = ({
   const updateFiles = (newFiles: FileList | null) => {
     if (!newFiles) return
     setFiles((prev) => [...prev, ...Array.from(newFiles)])
+    const currentFiles = getValues("files") || []
+    setValue("files", [...currentFiles, ...Array.from(newFiles)])
   }
 
   const handleDrop = (e: React.DragEvent) => {
