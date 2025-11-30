@@ -25,6 +25,7 @@ export const ProductForm = ({
   disabled = false,
   onSubmit,
 }: Props) => {
+  const [files, setFiles] = useState<File[]>([])
   const [dragActive, setDragActive] = useState(false)
   const {
     register,
@@ -36,6 +37,7 @@ export const ProductForm = ({
   } = useForm({
     defaultValues: product,
   })
+
   const selectedSizes = useWatch({ control, name: "sizes" })
   const selectedTags = useWatch({ control, name: "tags" })
   const currentStock = useWatch({ control, name: "stock" })
@@ -79,18 +81,21 @@ export const ProductForm = ({
     }
   }
 
+  const updateFiles = (newFiles: FileList | null) => {
+    if (!newFiles) return
+    setFiles((prev) => [...prev, ...Array.from(newFiles)])
+  }
+
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
     e.stopPropagation()
     setDragActive(false)
-    const files = e.dataTransfer.files
-    console.log(files)
+
+    updateFiles(e.dataTransfer.files)
   }
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-    console.log(files)
-  }
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    updateFiles(e.target.files)
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -439,6 +444,25 @@ export const ProductForm = ({
                         {image}
                       </p>
                     </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Imágenes por cargar */}
+              <div
+                className={cn("mt-6 space-y-3", { hidden: files.length === 0 })}
+              >
+                <h3 className='text-sm font-medium text-slate-700'>
+                  Imágenes por cargar
+                </h3>
+                <div className='grid grid-cols-2 gap-3'>
+                  {files.map((file, index) => (
+                    <img
+                      key={index}
+                      src={URL.createObjectURL(file)}
+                      alt='Product'
+                      className='object-cover w-full h-full rounded-lg'
+                    />
                   ))}
                 </div>
               </div>
