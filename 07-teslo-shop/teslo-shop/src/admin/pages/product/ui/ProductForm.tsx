@@ -1,14 +1,14 @@
 import { Plus, SaveAll, Tag, Upload, X } from "lucide-react"
+import type { Product, Size } from "@/interfaces/product.interface"
+import { useForm, useWatch } from "react-hook-form"
 
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router"
-import type { Product } from "@/interfaces/product.interface"
 import { Title } from "@/admin/components/Title"
 import { cn } from "@/lib/utils"
-import { useForm } from "react-hook-form"
 import { useState } from "react"
 
-const availableSizes = ["XS", "S", "M", "L", "XL", "XXL"]
+const availableSizes: Size[] = ["XS", "S", "M", "L", "XL", "XXL"]
 
 interface Props {
   title: string
@@ -22,9 +22,13 @@ export const ProductForm = ({ title, subtitle, product }: Props) => {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
+    setValue,
+    control,
   } = useForm({
     defaultValues: product,
   })
+  const selectedSizes = useWatch({ control, name: "sizes" })
 
   const addTag = () => {
     if (newTag.trim() && !product.tags.includes(newTag.trim())) {
@@ -42,13 +46,10 @@ export const ProductForm = ({ title, subtitle, product }: Props) => {
     // }))
   }
 
-  const addSize = (size: string) => {
-    if (!product.sizes.includes(size)) {
-      //   setProduct((prev) => ({
-      //     ...prev,
-      //     sizes: [...prev.sizes, size],
-      //   }))
-    }
+  const addSize = (size: Size) => {
+    const sizeSet = new Set(getValues("sizes"))
+    sizeSet.add(size)
+    setValue("sizes", Array.from(sizeSet))
   }
 
   const removeSize = (sizeToRemove: string) => {
@@ -258,10 +259,13 @@ export const ProductForm = ({ title, subtitle, product }: Props) => {
 
               <div className='space-y-4'>
                 <div className='flex flex-wrap gap-2'>
-                  {product.sizes.map((size) => (
+                  {availableSizes.map((size) => (
                     <span
                       key={size}
-                      className='inline-flex items-center px-3 py-1 text-sm font-medium text-blue-800 bg-blue-100 border border-blue-200 rounded-full'
+                      className={cn(
+                        "inline-flex items-center px-3 py-1 text-sm font-medium text-blue-800 bg-blue-100 border border-blue-200 rounded-full",
+                        { hidden: !selectedSizes.includes(size) }
+                      )}
                     >
                       {size}
                       <button
@@ -281,13 +285,14 @@ export const ProductForm = ({ title, subtitle, product }: Props) => {
                   {availableSizes.map((size) => (
                     <button
                       key={size}
-                      //   onClick={() => addSize(size)}
-                      //   disabled={product.sizes.includes(size)}
-                      //   className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-200 ${
-                      //     product.sizes.includes(size)
-                      //       ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                      //       : "bg-slate-200 text-slate-700 hover:bg-slate-300 cursor-pointer"
-                      //   }`}
+                      type='button'
+                      onClick={() => addSize(size)}
+                      disabled={selectedSizes.includes(size)}
+                      className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-200 ${
+                        selectedSizes.includes(size)
+                          ? "bg-slate-100 text-slate-400 cursor-not-allowed"
+                          : "bg-slate-200 text-slate-700 hover:bg-slate-300 cursor-pointer"
+                      }`}
                     >
                       {size}
                     </button>
