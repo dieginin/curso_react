@@ -25,7 +25,7 @@ export const AdminProductPage = () => {
         toast.success(`Producto '${data.title}' actualizado correctamente`, {
           position: "top-right",
         })
-        navigate(`/admin/products/${id}`)
+        navigate(`/admin/products/${data.id}`)
       },
       onError: () => toast.error("Error al actualizar el producto"),
     })
