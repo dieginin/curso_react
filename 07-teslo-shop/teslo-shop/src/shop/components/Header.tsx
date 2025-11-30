@@ -1,36 +1,18 @@
+import { Link, useParams } from "react-router"
 import { Menu, Search } from "lucide-react"
-import { useRef, type KeyboardEvent } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Link, useParams, useSearchParams } from "react-router"
-import { cn } from "@/lib/utils"
 import { Logo } from "@/components/shared/Logo"
+import { cn } from "@/lib/utils"
 import { useAuthStore } from "@/auth/store/auth.store"
+import { useSearchInput } from "@/hooks/useSearchInput"
 
 export const Header = () => {
-  const [searchParams, setSearchParams] = useSearchParams()
   const { authStatus, logout, isAdmin } = useAuthStore()
+  const { inputRef, query, handleSearch } = useSearchInput()
+
   const { gender } = useParams()
-
-  const inputRef = useRef<HTMLInputElement>(null)
-
-  const query = searchParams.get("query") || ""
-
-  const handleSearch = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key !== "Enter") return
-
-    const query = inputRef.current?.value
-    const newSearchParams = new URLSearchParams()
-
-    if (!query) {
-      newSearchParams.delete("query")
-    } else {
-      newSearchParams.set("query", query)
-    }
-
-    setSearchParams(newSearchParams)
-  }
 
   return (
     <header className='sticky top-0 z-50 w-full border-b backdrop-blur bg-slate-50'>
