@@ -1,7 +1,7 @@
 import { Plus, SaveAll, Tag, Upload, X } from "lucide-react"
 import type { Product, Size } from "@/interfaces/product.interface"
+import { useEffect, useRef, useState } from "react"
 import { useForm, useWatch } from "react-hook-form"
-import { useRef, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router"
@@ -43,6 +43,9 @@ export const ProductForm = ({
   } = useForm<FormInput>({
     defaultValues: product,
   })
+
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => setFiles([]), [product])
 
   const selectedSizes = useWatch({ control, name: "sizes" })
   const selectedTags = useWatch({ control, name: "tags" })
