@@ -1,6 +1,6 @@
 import "react-big-calendar/lib/css/react-big-calendar.css"
 
-import { CalendarEvent, Navbar } from "../components"
+import { CalendarEvent, CalendarModal, Navbar } from "../components"
 import { getMessagesES, localizer } from "../../helpers"
 import { useCallback, useState } from "react"
 
@@ -75,6 +75,7 @@ export const CalendarPage = () => {
         style={{ height: "calc(100vh - 56px)" }}
         view={view}
       />
+      <CalendarModal />
     </>
   )
 }
