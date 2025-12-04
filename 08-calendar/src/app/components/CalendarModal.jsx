@@ -1,9 +1,13 @@
 import "react-datepicker/dist/react-datepicker.css"
 
-import DatePicker from "react-datepicker"
+import DatePicker, { registerLocale } from "react-datepicker"
+
 import Modal from "react-modal"
 import { addHours } from "date-fns"
+import { es } from "date-fns/locale"
 import { useState } from "react"
+
+registerLocale("es", es)
 
 const customStyles = {
   content: {
@@ -52,8 +56,11 @@ export const CalendarModal = () => {
           <DatePicker
             className='form-control'
             dateFormat='Pp'
+            locale='es'
             onChange={(date) => onDateChange("start", date)}
             selected={formValues.start}
+            showTimeSelect
+            timeCaption='Hora'
           />
         </div>
 
@@ -62,9 +69,12 @@ export const CalendarModal = () => {
           <DatePicker
             className='form-control'
             dateFormat='Pp'
+            locale='es'
             minDate={formValues.start}
             onChange={(date) => onDateChange("end", date)}
             selected={formValues.end}
+            showTimeSelect
+            timeCaption='Hora'
           />
         </div>
 
