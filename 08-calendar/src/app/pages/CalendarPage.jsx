@@ -1,9 +1,9 @@
 import "react-big-calendar/lib/css/react-big-calendar.css"
 
+import { CalendarEvent, Navbar } from "../components"
 import { getMessagesES, localizer } from "../../helpers"
 
 import { Calendar } from "react-big-calendar"
-import { Navbar } from "../components/Navbar"
 import { addHours } from "date-fns"
 
 const events = [
@@ -12,15 +12,19 @@ const events = [
     notas: "Hay que comprar el pastel",
     start: new Date(),
     end: addHours(new Date(), 2),
+    bgColor: "#fafafa",
+    user: {
+      _id: "123",
+      name: " Diego",
+    },
   },
 ]
 
 export const CalendarPage = () => {
   const eventStyleGetter = (event, start, end, isSelected) => {
-    console.log({ event, start, end, isSelected })
     const style = {
       backgroundColor: "#347CF7",
-      //   borderRadius: "0px",
+      borderRadius: "0px",
       color: "white",
       opacity: 0.8,
     }
@@ -34,6 +38,10 @@ export const CalendarPage = () => {
     <>
       <Navbar />
       <Calendar
+        defaultView='week'
+        components={{
+          event: CalendarEvent,
+        }}
         culture='es'
         endAccessor='end'
         eventPropGetter={eventStyleGetter}
