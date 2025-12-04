@@ -2,6 +2,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css"
 
 import { CalendarEvent, Navbar } from "../components"
 import { getMessagesES, localizer } from "../../helpers"
+import { useCallback, useState } from "react"
 
 import { Calendar } from "react-big-calendar"
 import { addHours } from "date-fns"
@@ -21,6 +22,9 @@ const events = [
 ]
 
 export const CalendarPage = () => {
+  const [date, setDate] = useState(new Date())
+  const [view, setView] = useState(localStorage.getItem("view") || "week")
+
   const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
       backgroundColor: "#347CF7",
@@ -34,11 +38,26 @@ export const CalendarPage = () => {
     }
   }
 
+  const onDoubleClick = (event) => {
+    console.log({ doubleClick: event })
+  }
+
+  const onNavigate = useCallback((event) => setDate(event), [setDate])
+
+  const onSelect = (event) => {
+    console.log({ click: event })
+  }
+
+  const onView = (event) => {
+    setView(event)
+    localStorage.setItem("view", event)
+  }
+
   return (
     <>
       <Navbar />
       <Calendar
-        defaultView='week'
+        date={date}
         components={{
           event: CalendarEvent,
         }}
@@ -48,8 +67,13 @@ export const CalendarPage = () => {
         events={events}
         localizer={localizer}
         messages={getMessagesES()}
+        onDoubleClickEvent={onDoubleClick}
+        onNavigate={onNavigate}
+        onSelectEvent={onSelect}
+        onView={onView}
         startAccessor='start'
         style={{ height: "calc(100vh - 56px)" }}
+        view={view}
       />
     </>
   )
