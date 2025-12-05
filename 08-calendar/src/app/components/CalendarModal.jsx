@@ -2,12 +2,12 @@ import "react-datepicker/dist/react-datepicker.css"
 
 import DatePicker, { registerLocale } from "react-datepicker"
 import { addHours, differenceInSeconds } from "date-fns"
-import { useMemo, useState } from "react"
+import { useCalendarStore, useUiStore } from "../../hooks"
+import { useEffect, useMemo, useState } from "react"
 
 import Modal from "react-modal"
 import Swal from "sweetalert2"
 import { es } from "date-fns/locale"
-import { useUiStore } from "../../hooks"
 
 registerLocale("es", es)
 
@@ -26,18 +26,24 @@ Modal.setAppElement("#root")
 
 export const CalendarModal = () => {
   const { isDateModalOpen, closeDateModal } = useUiStore()
+  const { activeEvent } = useCalendarStore()
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [formValues, setFormValues] = useState({
-    title: "Diego",
-    notes: "Balestra",
+    title: "",
+    notes: "",
     start: new Date(),
-    end: addHours(new Date(), 2),
+    end: addHours(new Date(), 1),
   })
 
   const titleClass = useMemo(() => {
     if (formSubmitted && formValues.title.length < 1) return "is-invalid"
     return ""
   }, [formValues.title, formSubmitted])
+
+  useEffect(() => {
+    if (!activeEvent) return
+    setFormValues({ ...activeEvent })
+  }, [activeEvent])
 
   const onInputChange = ({ target }) =>
     setFormValues({ ...formValues, [target.name]: target.value })

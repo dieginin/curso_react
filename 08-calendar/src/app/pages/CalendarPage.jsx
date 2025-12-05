@@ -9,7 +9,7 @@ import { Calendar } from "react-big-calendar"
 
 export const CalendarPage = () => {
   const { openDateModal } = useUiStore()
-  const { events } = useCalendarStore()
+  const { events, setActiveEvent } = useCalendarStore()
   const [date, setDate] = useState(new Date())
   const [view, setView] = useState(localStorage.getItem("view") || "week")
 
@@ -27,10 +27,6 @@ export const CalendarPage = () => {
   }
 
   const onNavigate = useCallback((event) => setDate(event), [setDate])
-
-  const onSelect = (event) => {
-    console.log({ click: event })
-  }
 
   const onView = (event) => {
     setView(event)
@@ -53,7 +49,7 @@ export const CalendarPage = () => {
         messages={getMessagesES()}
         onDoubleClickEvent={openDateModal}
         onNavigate={onNavigate}
-        onSelectEvent={onSelect}
+        onSelectEvent={setActiveEvent}
         onView={onView}
         startAccessor='start'
         style={{ height: "calc(100vh - 56px)" }}
