@@ -6,6 +6,7 @@ import { useCallback, useState } from "react"
 
 import { Calendar } from "react-big-calendar"
 import { addHours } from "date-fns"
+import { useUiStore } from "../../hooks"
 
 const events = [
   {
@@ -22,6 +23,7 @@ const events = [
 ]
 
 export const CalendarPage = () => {
+  const { openDateModal } = useUiStore()
   const [date, setDate] = useState(new Date())
   const [view, setView] = useState(localStorage.getItem("view") || "week")
 
@@ -36,10 +38,6 @@ export const CalendarPage = () => {
     return {
       style,
     }
-  }
-
-  const onDoubleClick = (event) => {
-    console.log({ doubleClick: event })
   }
 
   const onNavigate = useCallback((event) => setDate(event), [setDate])
@@ -67,7 +65,7 @@ export const CalendarPage = () => {
         events={events}
         localizer={localizer}
         messages={getMessagesES()}
-        onDoubleClickEvent={onDoubleClick}
+        onDoubleClickEvent={openDateModal}
         onNavigate={onNavigate}
         onSelectEvent={onSelect}
         onView={onView}
