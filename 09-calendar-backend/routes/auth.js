@@ -12,9 +12,9 @@ const {
   renovarToken,
 } = require("../controllers/auth")
 
-router.post("/", crearUsuario)
+router.post("/", loginUsuario)
 
-router.post("/new", loginUsuario)
+router.post("/new", crearUsuario)
 
 router.get("/renew", renovarToken)
 

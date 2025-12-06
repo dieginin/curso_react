@@ -3,14 +3,14 @@ const { request, response } = require("express")
 const crearUsuario = (req = request, res = response) => {
   res.json({
     ok: true,
-    msg: "login",
+    msg: "registro",
   })
 }
 
 const loginUsuario = (req = request, res = response) => {
   res.json({
     ok: true,
-    msg: "registro",
+    msg: "login",
   })
 }
 
