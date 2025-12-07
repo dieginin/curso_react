@@ -1,14 +1,45 @@
 const { response } = require("express")
 const Evento = require("../models/Evento")
 
-const actualizarEvento = (req, res = response) => {
+const actualizarEvento = async (req, res = response) => {
   const { id } = req.params
+  const { uid } = req
 
-  res.status(200).json({
-    ok: true,
-    msg: "Actualizar evento",
-    id,
-  })
+  try {
+    const evento = await Evento.findById(id)
+
+    if (!evento) {
+      return res.status(404).json({
+        ok: false,
+        msg: "Evento no existe con ese id",
+      })
+    }
+
+    if (evento.user.toString() !== uid) {
+      return res.status(401).json({
+        ok: false,
+        msg: "No tiene privilegio de editar este evento",
+      })
+    }
+
+    const newEvent = {
+      ...req.body,
+      user: uid,
+    }
+    const updatedEvent = await Evento.findByIdAndUpdate(id, newEvent, {
+      new: true,
+    })
+
+    res.status(200).json({
+      ok: true,
+      evento: updatedEvent,
+    })
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      msg: "Por favor contacte al administrador",
+    })
+  }
 }
 
 const crearEvento = async (req, res = response) => {
