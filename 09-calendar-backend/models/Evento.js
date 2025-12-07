@@ -19,6 +19,7 @@ const EventoSchema = Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: "Usuario",
+    require: true,
   },
 })
 
