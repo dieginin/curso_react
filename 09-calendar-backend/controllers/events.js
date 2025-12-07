@@ -40,10 +40,12 @@ const eliminarEvento = (req, res = response) => {
   })
 }
 
-const getEventos = (req, res = response) => {
+const getEventos = async (req, res = response) => {
+  const eventos = await Evento.find().populate("user", "name")
+
   res.status(200).json({
     ok: true,
-    msg: "Obtener eventos",
+    eventos,
   })
 }
 
