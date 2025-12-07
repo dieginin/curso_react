@@ -13,6 +13,7 @@ const {
   renovarToken,
 } = require("../controllers/auth")
 const { validarCampos } = require("../middlewares/validar-campos")
+const { validarJWT } = require("../middlewares/validar-jwt")
 
 router.post(
   "/",
@@ -39,6 +40,6 @@ router.post(
   crearUsuario
 )
 
-router.get("/renew", renovarToken)
+router.get("/renew", validarJWT, renovarToken)
 
 module.exports = router
