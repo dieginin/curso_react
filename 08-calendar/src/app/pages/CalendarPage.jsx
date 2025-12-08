@@ -9,13 +9,13 @@ import {
 } from "../components"
 import { getMessagesES, localizer } from "../../helpers"
 import { useCalendarStore, useUiStore } from "../../hooks"
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 import { Calendar } from "react-big-calendar"
 
 export const CalendarPage = () => {
   const { openDateModal } = useUiStore()
-  const { events, setActiveEvent } = useCalendarStore()
+  const { events, setActiveEvent, startLoadingEvents } = useCalendarStore()
   const [date, setDate] = useState(new Date())
   const [view, setView] = useState(localStorage.getItem("view") || "week")
 
@@ -38,6 +38,10 @@ export const CalendarPage = () => {
     setView(event)
     localStorage.setItem("view", event)
   }
+
+  useEffect(() => {
+    startLoadingEvents()
+  }, [])
 
   return (
     <>
