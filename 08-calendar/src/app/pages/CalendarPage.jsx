@@ -8,20 +8,22 @@ import {
   Navbar,
 } from "../components"
 import { getMessagesES, localizer } from "../../helpers"
-import { useCalendarStore, useUiStore } from "../../hooks"
+import { useAuthStore, useCalendarStore, useUiStore } from "../../hooks"
 import { useCallback, useEffect, useState } from "react"
 
 import { Calendar } from "react-big-calendar"
 
 export const CalendarPage = () => {
+  const { user } = useAuthStore()
   const { openDateModal } = useUiStore()
   const { events, setActiveEvent, startLoadingEvents } = useCalendarStore()
   const [date, setDate] = useState(new Date())
   const [view, setView] = useState(localStorage.getItem("view") || "week")
 
   const eventStyleGetter = (event, start, end, isSelected) => {
+    const isMyEvent = user.uid === event.user._id || user.uid === event.user.uid
     const style = {
-      backgroundColor: "#347CF7",
+      backgroundColor: isMyEvent ? "#347CF7" : "#465660",
       borderRadius: "0px",
       color: "white",
       opacity: 0.8,
