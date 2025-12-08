@@ -1,24 +1,71 @@
 import "./LoginPage.css"
 
+import { useForm } from "../../hooks/useForm"
+
+const loginFormFields = {
+  loginEmail: "",
+  loginPassword: "",
+}
+
+const registerFormFields = {
+  registerName: "",
+  registerEmail: "",
+  registerPassword: "",
+  registerPassword2: "",
+}
+
 export const LoginPage = () => {
+  const {
+    loginEmail,
+    loginPassword,
+    onInputChange: onLoginInputChange,
+  } = useForm(loginFormFields)
+  const {
+    registerName,
+    registerEmail,
+    registerPassword,
+    registerPassword2,
+    onInputChange: onRegisterInputChange,
+  } = useForm(registerFormFields)
+
+  const loginSubmit = (event) => {
+    event.preventDefault()
+    console.log({ loginEmail, loginPassword })
+  }
+  const registerSubmit = (event) => {
+    event.preventDefault()
+    console.log({
+      registerName,
+      registerEmail,
+      registerPassword,
+      registerPassword2,
+    })
+  }
+
   return (
     <div className='container login-container'>
       <div className='row'>
         <div className='col-md-6 login-form-1'>
           <h3>Ingreso</h3>
-          <form>
+          <form onSubmit={loginSubmit}>
             <div className='form-group mb-2'>
               <input
-                type='text'
+                type='email'
+                name='loginEmail'
                 className='form-control'
                 placeholder='Correo'
+                value={loginEmail}
+                onChange={onLoginInputChange}
               />
             </div>
             <div className='form-group mb-2'>
               <input
                 type='password'
+                name='loginPassword'
                 className='form-control'
                 placeholder='Contraseña'
+                value={loginPassword}
+                onChange={onLoginInputChange}
               />
             </div>
             <div className='d-grid gap-2'>
@@ -29,34 +76,46 @@ export const LoginPage = () => {
 
         <div className='col-md-6 login-form-2'>
           <h3>Registro</h3>
-          <form>
+          <form onSubmit={registerSubmit}>
             <div className='form-group mb-2'>
               <input
                 type='text'
+                name='registerName'
                 className='form-control'
                 placeholder='Nombre'
+                value={registerName}
+                onChange={onRegisterInputChange}
               />
             </div>
             <div className='form-group mb-2'>
               <input
                 type='email'
+                name='registerEmail'
                 className='form-control'
                 placeholder='Correo'
+                value={registerEmail}
+                onChange={onRegisterInputChange}
               />
             </div>
             <div className='form-group mb-2'>
               <input
                 type='password'
+                name='registerPassword'
                 className='form-control'
                 placeholder='Contraseña'
+                value={registerPassword}
+                onChange={onRegisterInputChange}
               />
             </div>
 
             <div className='form-group mb-2'>
               <input
                 type='password'
+                name='registerPassword2'
                 className='form-control'
                 placeholder='Repita la contraseña'
+                value={registerPassword2}
+                onChange={onRegisterInputChange}
               />
             </div>
 
